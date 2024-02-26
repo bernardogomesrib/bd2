@@ -11,3 +11,13 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: senha1234
       MYSQL_DATABASE: bancodedados2
+  demo_dbPostgress:
+    container_name: demo_dbPostgress
+    image: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: senha1234
+      POSTGRES_USER: usuario
+      POSTGRES_DB: postgres
