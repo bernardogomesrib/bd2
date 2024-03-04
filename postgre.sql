@@ -73,6 +73,44 @@ BEGIN
 
 END;
 $$
+
+
+CREATE OR REPLACE FUNCTION temProduto(a1 VARCHAR(40))
+RETURNS int
+LANGUAGE plpgsql as $$
+DECLARE id_do_produto int;
+BEGIN
+    SELECT produto.id from produto WHERE produto.nome = a1 INTO id_do_produto;
+    IF id_do_produto is NULL THEN
+        SELECT id from produto ORDER by id DESC LIMIT 1 INTO id_do_produto;
+        id_do_produto = id_do_produto+1;
+        INSERT INTO produto VALUES(id_do_produto,a1,NULL);
+    ELSE
+        RAISE EXCEPTION 'produto já existe';
+    END IF;
+    RETURN id_do_produto;
+
+END;
+$$
+
+CREATE OR REPLACE FUNCTION criaRelacao(a1 VARCHAR(40),a2 VARCHAR(40))
+RETURNS int
+LANGUAGE plpgsql as $$
+DECLARE id_do_fornecedor int;
+BEGIN
+    SELECT fornecedor.id from fornecedor WHERE fornecedor.nome = a1 INTO id_do_fornecedor;
+    IF id_do_fornecedor is NULL THEN
+        SELECT id from fornecedor ORDER by id DESC LIMIT 1 INTO id_do_fornecedor;
+        id_do_fornecedor = id_do_fornecedor+1;
+        INSERT INTO fornecedor VALUES(id_do_fornecedor,a1);
+    ELSE
+        RAISE EXCEPTION 'Fornecedor já existe';
+    END IF;
+    RETURN id_do_fornecedor;
+
+END;
+$$
+
 SELECT temFornecedor('maconha');
 drop Function temfornecedor;
 SELECT * from fornecedor;
