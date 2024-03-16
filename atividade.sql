@@ -43,10 +43,10 @@ SELECT * from artista;
 
 --4- Criar uma estrutura que retorna os nomes dos artistas e a quantidade de músicas deles que fazem parte de um álbum, 
 --a partir do nome do álbum. Caso o álbum não exista, deve levantar uma exceção.
-
+DROP Function albumProcura;
 
 CREATE or REPLACE FUNCTION albumProcura(var_nomeAlb VARCHAR(40))
-RETURNS TABLE (concatenacao VARCHAR)
+RETURNS TABLE (nome_artista VARCHAR,quantidadeMusica BIGINT)
 LANGUAGE plpgsql as $$
 DECLARE var_cod INTEGER;
 BEGIN
@@ -54,7 +54,7 @@ BEGIN
     IF var_cod IS NULL THEN
         RAISE EXCEPTION 'Album Não Existe!';
     ELSE
-        RETURN QUERY SELECT concat('(',artista.nome_artista,',', count(faz_parte.cod_musica),')') FROM faz_parte JOIN musica on musica.codigo =
+        RETURN QUERY SELECT artista.nome_artista, count(faz_parte.cod_musica) FROM faz_parte JOIN musica on musica.codigo =
         faz_parte.cod_musica JOIN artista ON musica.cod_artista = artista.codigo WHERE faz_parte.cod_album = var_cod GROUP BY artista.nome_artista;
     END IF;
 END;
@@ -62,7 +62,7 @@ $$
 
 SELECT albumProcura('Romântico Misto');
 
-
+--tentando ver se tem erro no código
 SELECT artista.nome_artista, count(faz_parte.cod_musica) AS quantidadeMusicas FROM faz_parte JOIN musica on musica.codigo =
         faz_parte.cod_musica JOIN artista ON musica.cod_artista = artista.codigo WHERE faz_parte.cod_album = 1 GROUP BY artista.nome_artista;
 
@@ -72,7 +72,7 @@ SELECT concat('(',artista.nome_artista,',', count(faz_parte.cod_musica),')') FRO
 drop FUNCTION albumProcura;
 --- IA Respondendo depois de muito apanhar
 CREATE OR REPLACE FUNCTION albumProcura(var_nomeAlb VARCHAR(40))
-RETURNS TABLE(artista VARCHAR(30), quantidadeMusicas INTEGER)
+RETURNS TABLE(artista VARCHAR(30), quantidadeMusicas BIGINT)
 LANGUAGE plpgsql AS $$
 DECLARE 
     var_cod INTEGER;
@@ -97,78 +97,24 @@ BEGIN
     END IF;
 END;
 $$;
-
+SELECT albumProcura('Romântico Misto');
 
 
 --- fim resposta IA
 
-CREATE OR REPLACE FUNCTION obter()
-RETURNS TABLE (cod_musica INTEGER, cod_album INTEGER)
-LANGUAGE plpgsql AS $$
-BEGIN
-    RETURN QUERY
-        SELECT *
-        FROM faz_parte;
-END;
-$$;
-SELECT obter();
 
-
------- MINHA TENTATIVA COM PROCEDURE
-DROP FUNCTION tentativa;
-
-CREATE or REPLACE FUNCTION tentativa(var_nomeAlbum VARCHAR)
-RETURNS TABLE (nome_artista VARCHAR(50),contagem INTEGER)
-LANGUAGE plpgsql AS $$
-DECLARE var_cod INTEGER;
-BEGIN
-    SELECT codigo FROM album WHERE nome = var_nomeAlbum LIMIT 1 INTO var_cod;
-    IF var_cod IS NULL THEN
-        RAISE EXCEPTION 'Album não existe';
-    ELSE
-        RETURN query SELECT artista.nome_artista,count(faz_parte.cod_musica) as contagem FROM faz_parte JOIN musica on musica.codigo =
-        faz_parte.cod_musica JOIN artista ON musica.cod_artista = artista.codigo WHERE faz_parte.cod_album = var_cod GROUP BY artista.nome_artista;
-    
-    END IF;
-END;
-$$;
-
-
-SELECT tentativa('Romântico Misto');
-
-CREATE OR REPLACE FUNCTION minha_procedure(var_nomeAlbum VARCHAR)
-RETURNS TABLE(coluna1 VARCHAR, coluna2 INT) AS $$
-DECLARE var_cod INTEGER;
-BEGIN
-    
-   SELECT codigo FROM album WHERE nome = var_nomeAlbum LIMIT 1 INTO var_cod;
-    IF var_cod IS NULL THEN
-        RAISE EXCEPTION 'Album não existe';
-    ELSE
-        RETURN query SELECT nome_artista, count(faz_parte.cod_musica) FROM faz_parte JOIN musica on musica.codigo =
-        faz_parte.cod_musica JOIN artista ON musica.cod_artista = artista.codigo WHERE faz_parte.cod_album = var_cod GROUP BY artista.nome_artista;
-    
-    END IF;
-END;
-$$ LANGUAGE plpgsql;
-
-SELECT minha_procedure('Romantico Misto');
-
-CALL tentativa('Romântico Misto');
-
-
- SELECT artista.nome_artista, count(faz_parte.cod_musica) FROM faz_parte JOIN musica on musica.codigo =
-        faz_parte.cod_musica JOIN artista ON musica.cod_artista = artista.codigo WHERE faz_parte.cod_album = 3 GROUP BY artista.nome_artista;
-    SELECT codigo FROM album WHERE nome = 'Romântico Misto' LIMIT 1;
-
-
------- FIM TENTATIVA
 
 --REGRA DO NEGÓCIO: Uma regra desse negócio é que um álbum só pode ser lançado com pelo menos 5 músicas associadas. 
 --A coluna que indica se o álbum já pode ser lançado é o booleano pode_lancar, já a data de lançamento é colocada na 
 --coluna dt_lancamento.
 --5- Criar uma trigger que atualiza a coluna pode_lancar para true quando a quantidade mínima de músicas de 
 --um álbum é atingida.
+
+CREATE Function atualizaColuna()
+RETURNS TRIGGER
+
+
+
 --6- Criar uma trigger que não permite marcar o lançamento de um álbum 
 --(preenchimento da coluna dt_lancamento em album com valor diferente de null) sem o album estar apto para ser 
 --lançado (pode_lancar deve estar em true).
