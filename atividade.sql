@@ -110,8 +110,57 @@ SELECT albumProcura('Romântico Misto');
 --5- Criar uma trigger que atualiza a coluna pode_lancar para true quando a quantidade mínima de músicas de 
 --um álbum é atingida.
 
-CREATE Function atualizaColuna()
+
+-- função do trigger
+CREATE or REPLACE Function atualizaColunaAlbum()
 RETURNS TRIGGER
+LANGUAGE plpgsql as $$
+DECLARE qnt_mus BIGINT;
+BEGIN
+    SELECT count(cod_musica) FROM faz_parte WHERE cod_album = NEW.cod_album INTO qnt_mus;
+    IF qnt_mus >= 5 THEN
+        UPDATE album set pode_lancar = TRUE WHERE album.codigo = new.cod_album;
+    ELSE
+        UPDATE album set pode_lancar = FALSE WHERE album.codigo = new.cod_album;
+    END IF;
+    RETURN NEW;
+END;
+$$
+
+--trigger sendo criado
+CREATE TRIGGER TG_atualizaColunaAlbum
+before insert ON faz_parte
+FOR EACH ROW
+EXECUTE PROCEDURE atualizaColunaAlbum();
+
+
+-- checando os albuns por quantidade de musica
+SELECT count(cod_musica) FROM faz_parte WHERE cod_album = 3;
+
+-- inserindo um valor no album 3 para confirmar o trigger
+INSERT INTO faz_parte VALUES(6,3);
+
+SELECT * from album;
+
+-- SELECT mostrando se a musica está ou não em album
+SELECT musica.codigo, musica.título, CASE 
+    WHEN (SELECT count(cod_album) FROM faz_parte WHERE cod_musica = musica.codigo)>=1 THEN  TRUE
+    ELSE
+        FALSE
+END as colun FROM musica;
+
+
+
+-- SELECT com apenas as musicas que não estão em albuns
+WITH subconsulta AS (
+    SELECT cod_musica, COUNT(cod_album) >= 1 AS faz_parte_do_album
+    FROM faz_parte
+    GROUP BY cod_musica
+)
+SELECT m.codigo, m.título, sub.faz_parte_do_album
+FROM musica AS m
+LEFT JOIN subconsulta AS sub ON m.codigo = sub.cod_musica
+WHERE sub.faz_parte_do_album is null;
 
 
 
@@ -119,3 +168,19 @@ RETURNS TRIGGER
 --(preenchimento da coluna dt_lancamento em album com valor diferente de null) sem o album estar apto para ser 
 --lançado (pode_lancar deve estar em true).
 
+CREATE or REPLACE FUNCTION checaSePodeLancar()
+RETURNS TRIGGER
+LANGUAGE PLPGSQL AS $$
+BEGIN
+    IF (new.pode_lancar = FALSE) THEN
+        RAISE EXCEPTION 'Album não tem quantidade suficiente de músicas';
+    ELSE
+        RETURN NEW;
+    END IF;
+    RETURN NEW;
+END;
+$$
+CREATE Trigger TG_checaPodeLançar
+BEFORE UPDATE on album for EACH row EXECUTE PROCEDURE checaSePodeLancar();
+
+UPDATE album set dt_lancamento = '2022-12-12' WHERE codigo = 3;
