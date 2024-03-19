@@ -2,8 +2,8 @@
 
 -- 1- Criar um relatório que mostre os nomes das músicas e dos seus criadores (nomes dos artistas) 
 --que não fazem parte de um album, ou seja, músicas criadas mas que não fazem parte de um álbum ainda.
-CREATE VIEW relatorioNaoFazParte as
-SELECT musica.codigo as codigoMusica, musica.título, artista.codigo as codigoArtista, artista.nome_artista from musica join artista on musica.cod_artista = artista.codigo where musica.codigo not in((select faz_parte.cod_musica from faz_parte));
+CREATE or REPLACE VIEW relatorioNaoFazParte as
+SELECT musica.codigo as codigoMusica, musica.título, artista.codigo as codigoArtista, artista.nome_artista from musica left join artista on musica.cod_artista = artista.codigo where musica.codigo not in((select faz_parte.cod_musica from faz_parte));
 
 SELECT * from relatorioNaoFazParte
 
@@ -13,6 +13,7 @@ SELECT album.nome, (SELECT count(cod_musica) FROM faz_parte WHERE cod_album = al
 
 SELECT * from relatorioMusicasPorAlbum;
 
+INSERT INTO album VALUES((SELECT max(codigo)+1 from album LIMIT 1), 'wahwhwh',FALSE,null);
 
 --3- Criar uma estrutura que insere uma música recebendo o título, a duração e o nome do artista. O procedimento deve 
 --verificar se o artista já existe, caso não exista deve inserir ele antes. O procedimento deve gerar os códigos das tabelas, 
@@ -128,8 +129,8 @@ END;
 $$
 
 --trigger sendo criado
-CREATE TRIGGER TG_atualizaColunaAlbum
-before insert ON faz_parte
+CREATE OR REPLACE TRIGGER TG_atualizaColunaAlbum
+AFTER insert ON faz_parte
 FOR EACH ROW
 EXECUTE PROCEDURE atualizaColunaAlbum();
 
