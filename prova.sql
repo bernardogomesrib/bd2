@@ -7,7 +7,7 @@ SELECT * FROM entradas;
 SELECT * FROM saidas;
 
 CREATE or REPLACE VIEW relatorioValorGastoPorCategoria as
-SELECT cliente.id,cliente.nome,sum(preco_venda) as "TotalVendas" from cliente JOIN saidas on id_cliente = cliente.id join produto on cod_produto = produto.codigo GROUP BY produto.categoria, cliente.id;
+SELECT cliente.id,cliente.nome,sum(preco_venda * quantidade) as "TotalVendas" from cliente JOIN saidas on id_cliente = cliente.id join produto on cod_produto = produto.codigo GROUP BY produto.categoria, cliente.id;
 
 
 SELECT * from relatorioValorGastoPorCategoria;
@@ -21,12 +21,14 @@ SELECT * from relatorioValorGastoPorCategoria;
 
 
 CREATE or REPLACE VIEW relatorioLucroPrejuizo as
-SELECT produto.codigo,produto.descricao,produto.estoque, sum(saidas.preco_venda) as "TotalLucro", sum(entradas.preco_unitario*entradas.quantidade) as "TotalGasto", (sum(saidas.preco_venda)-sum(entradas.preco_unitario*entradas.quantidade)) as "lucroOuPrejuizo"from produto left JOIN saidas on saidas.cod_produto = produto.codigo LEFT JOIN entradas on entradas.cod_produto = produto.codigo GROUP BY produto.codigo;
+SELECT produto.codigo,produto.descricao,produto.estoque, sum(saidas.preco_venda * saidas.quantidade) as "TotalLucro", sum(entradas.preco_unitario*entradas.quantidade) as "TotalGasto", (sum(saidas.preco_venda * saidas.quantidade)-sum(entradas.preco_unitario*entradas.quantidade)) as "lucroOuPrejuizo"from produto left JOIN saidas on saidas.cod_produto = produto.codigo LEFT JOIN entradas on entradas.cod_produto = produto.codigo GROUP BY produto.codigo;
 
 SELECT * from relatoriolucroprejuizo;
 
 CREATE or REPLACE VIEW produtosNaoVendidos as
 SELECT codigo,descricao,estoque,"TotalGasto","lucroOuPrejuizo" FROM relatoriolucroprejuizo WHERE "TotalLucro" is NULL;
+
+SELECT * from produto;
 
 SELECT * FROM produtosNaoVendidos;
 
