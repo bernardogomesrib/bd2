@@ -30,7 +30,7 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: senha1234
-
+      MONGO_INITDB_DATABASE: bancodedados
     #mongo-express:
     #image: mongo-express
     #restart: always

@@ -1,0 +1,35 @@
+-- Active: 1721044368545@@127.0.0.1@27017@admin
+
+// código para criar uma coleção / tabela
+db('admin').createCollection('base');
+
+db('admin').collection('base').insertMany([{name:"test", age: 20}, {name:"test2", age: 30}]);
+db('admin').collection('base').insertOne({name:"test3", age: 40});
+db('admin').collection('base').insertOne({name:"asjdau", age: 26,address:{city:"city", street:"street"}});
+
+// código para encontrar todos os documentos
+db('admin').collection('base').find().limit(10).toArray();
+
+// código para encontrar todos os documenos com idade menor que 50
+db('admin').collection('base').find({age:{$lte:50}}).limit(10).toArray();
+
+// codigo para encontrar todos os documentos com idade diferente de 26
+db('admin').collection('base').find({age:{$ne:26}}).limit(10).toArray();
+
+//código para encontrar todos os documentos que tenham address
+db('admin').collection('base').find({address:{$exists:true}}).limit(10).toArray();
+
+
+//código para encontrar todos os documentos que tenham idade menor que 26 ou maior que 28
+db('admin').collection('base').find({$or:[{age:{$lt:26}},{age:{$gt:28}}]}).limit(10).toArray();
+
+
+//código para encontrar todos os documentos que tenham cidade igual a city
+db('admin').collection('base').find({"address.city":"city"}).limit(10).toArray();
+
+
+// código para mostrar apenas o nome e id dos dados na base
+db('admin').collection('base').find({}, {projection:{name:1, _id:1}}).limit(10).toArray();
+db('admin').collection('base').find({}, {projection:{name:1, _id:1}}).toArray();
+
+
