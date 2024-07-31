@@ -1,0 +1,15 @@
+
+lpush frutas maçã banana abacaxi goiaba
+lrange frutas 0 1000
+llen frutas
+
+
+HMSET link:tv link /tv descricao "board de assuntos relacionados a televisão"
+HMSET link:anime link /anime descricao "board de assuntos relacionados a animes"
+HMSET link:eletronica link /eletronica descricao "board de assuntos relacionados a eletrônica em geral"
+HMSET link:mahining link /mahining descricao "o assunto aqui é só máquinas e peças feitas com CNC e tornos"
+HMSET link:fight link /fight descricao "só lutas!"
+
+KEYS link:*
+
+HGETALL link:tv

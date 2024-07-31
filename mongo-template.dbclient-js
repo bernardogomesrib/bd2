@@ -32,4 +32,35 @@ db('admin').collection('base').find({"address.city":"city"}).limit(10).toArray()
 db('admin').collection('base').find({}, {projection:{name:1, _id:1}}).limit(10).toArray();
 db('admin').collection('base').find({}, {projection:{name:1, _id:1}}).toArray();
 
+// mostrar nome e idade ordenado pelo nome sem mostrar id
+db('admin').collection('base').find({}, {projection:{name:1, age:1,_id:0}, sort:{name:1}}).toArray();
 
+// atualizando a idade de quem tem 20 anos de idade para 12 anos de idade
+db('admin').collection('base').updateMany({age:20}, {$set:{age:12}});
+
+// atualizando apenas um que tem idade igual a 12 para 15
+db('admin').collection('base').updateOne({age:12}, {$set:{age:15}});
+
+// atualizando apenas a idade do objeto que tem o id igual a ObjectID('669e452608c791c7e15def04')
+db('admin').collection('base').updateOne({_id:ObjectID('669e452608c791c7e15def04')} , {$set:{age:600}});
+
+// definindo várias disciplinas para o aluno com idade igual a 600
+db('admin').collection('base').updateOne({age:600}, {$set:{disciplinas:["matemática", "português", "física"]}});
+db('admin').collection('base').find({}).toArray();
+
+// desdefinindo as disciplinas do aluno com idade igual a 600
+db('admin').collection('base').updateOne({age:600}, {$unset:{disciplinas:1}});
+
+// somando 5 a idade de quem tem idade igual a 30
+db('admin').collection('base').updateMany({age:30}, {$inc:{age:5}});
+
+
+
+//procurando as bibliotecas das faculdades no meu banco de dados
+db('admin').collection('faculdades').find({},{projection:{biblioteca:1,_id:0}}).toArray()
+
+db('admin').collection('faculdades').find({biblioteca: {$exists: true}}).toArray();
+// mostrando apenas a coluna biblioteca de cada faculdade
+
+
+db('admin').collection('faculdades').find({biblioteca:{$exists:true}}, {projection: {'faculdades.biblioteca': 1, _id: 0, 'biblioteca': 1}}).toArray();

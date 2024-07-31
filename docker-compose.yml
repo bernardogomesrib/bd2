@@ -21,6 +21,12 @@ services:
       POSTGRES_PASSWORD: senha1234
       POSTGRES_USER: usuario
       POSTGRES_DB: postgres
+  demo_redis:
+    container_name: demo_redis
+    image: redis
+    restart: always
+    ports:
+      - "6379:6379"
   demo_mongodb:
     container_name: demo_mongodb
     image:  mongo
