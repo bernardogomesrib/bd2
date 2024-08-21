@@ -37,6 +37,16 @@ services:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: senha1234
       MONGO_INITDB_DATABASE: bancodedados
+  demo_neo4j:
+    container_name: demo_neo4j
+    image: neo4j
+    restart: always
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    environment:
+      NEO4J_AUTH: neo4j/senha1234
+      
     #mongo-express:
     #image: mongo-express
     #restart: always
