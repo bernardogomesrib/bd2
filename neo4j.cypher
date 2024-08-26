@@ -1,159 +1,96 @@
-CREATE (:Professor {Nome: 'Eric', Sobrenome: 'Sales', Idade: 33, Formação: 'Sistemas da Informação', Titulo: 'Mestre', isCoordenador: FALSE}),
-    (:Professor {Nome: 'Viviane', Sobrenome: 'Aureliano', Idade: 44, Formação: 'Ciênica da Computação', Titulo: 'Doutora', isCoordenador: FALSE}),
-    (:Professor {Nome: 'Jacinta', Sobrenome: 'Raposo', Idade: 40, Formação: 'Administração', Titulo: 'Mestre', isCoordenador: TRUE}),
-    (:Professor {Nome: 'Carlos', Sobrenome: 'Brasil', Idade: 42, Formação: 'Ciência da Computação', Titulo: 'Mestre', isCoordenador: TRUE}),
-    (:Professor {Nome: 'Nilson', Sobrenome: 'Cândido', Idade: 38, Formação: 'Sistema de Informação', Titulo: 'Mestre', isCoordenador: TRUE}),
-    (:Professor {Nome: 'Sóstenes', Sobrenome: 'Cruz', Idade: 35, Formação: 'Ciências Contábeis', Titulo: 'Mestre', isCoordenador: TRUE}),
-    (:Professor {Nome: 'Djuri', Sobrenome: 'Vieira', Idade: 50, Formação: 'Engenharia de Produção', Titulo: 'Mestre', isCoordenador: TRUE}),
-    (:Professor {Nome: 'Natália', Sobrenome: 'Souza', Idade: 31, Formação: 'Administração', Titulo: 'Mestre', isCoordenador: TRUE}),
-    (:Professor {Nome: 'Havana', Sobrenome: 'Alves', Idade: 34, Formação: 'Engenharia da Computação', Titulo: 'Mestre', isCoordenador: TRUE});;
+CREATE (peric:Professor {Nome: 'Eric', Sobrenome: 'Sales', Idade: 33, Formação: 'Sistemas da Informação', Titulo: 'Mestre', isCoordenador: FALSE}),
+       (pviviane:Professor {Nome: 'Viviane', Sobrenome: 'Aureliano', Idade: 44, Formação: 'Ciênica da Computação', Titulo: 'Doutora', isCoordenador: FALSE}),
+       (pjacinta:Professor {Nome: 'Jacinta', Sobrenome: 'Raposo', Idade: 40, Formação: 'Administração', Titulo: 'Mestre', isCoordenador: TRUE}),
+       (pcarlos:Professor {Nome: 'Carlos', Sobrenome: 'Brasil', Idade: 42, Formação: 'Ciência da Computação', Titulo: 'Mestre', isCoordenador: TRUE}),
+       (pnilson:Professor {Nome: 'Nilson', Sobrenome: 'Cândido', Idade: 38, Formação: 'Sistema de Informação', Titulo: 'Mestre', isCoordenador: TRUE}),
+       (psostenes:Professor {Nome: 'Sóstenes', Sobrenome: 'Cruz', Idade: 35, Formação: 'Ciências Contábeis', Titulo: 'Mestre', isCoordenador: TRUE}),
+       (pdjuri:Professor {Nome: 'Djuri', Sobrenome: 'Vieira', Idade: 50, Formação: 'Engenharia de Produção', Titulo: 'Mestre', isCoordenador: TRUE}),
+       (pnatalia:Professor {Nome: 'Natália', Sobrenome: 'Souza', Idade: 31, Formação: 'Administração', Titulo: 'Mestre', isCoordenador: TRUE}),
+       (phavana:Professor {Nome: 'Havana', Sobrenome: 'Alves', Idade: 34, Formação: 'Engenharia da Computação', Titulo: 'Mestre', isCoordenador: TRUE});;
 
-MATCH (p:Professor)
-WHERE p.Nome = 'Nilson' AND p.Sobrenome = 'Cândido'
-CREATE (c:Curso {nome: 'ADS', nivel: 'superior', turno: 'tarde'})
-CREATE (c)-[:TEM_COORDENADOR]->(p);
+CREATE (cadstarde:Curso {nome: 'ADS', nivel: 'superior', turno: 'tarde'})
+CREATE (cadsnoite:Curso {nome: 'ADS', nivel: 'superior', turno: 'noite'})
+CREATE (cipi:Curso {nome: 'INFORMÁTICA PARA INTERNET', nivel: 'técnico', turno: 'tarde'})
+CREATE (cipinoite:Curso {nome: 'INFORMÁTICA PARA INTERNET', nivel: 'técnico', turno: 'noite'})
+CREATE (cmids:Curso {nome: 'MIDS', nivel: 'Integrado', turno: 'manhã'})
+CREATE (cadm:Curso {nome: 'TÉCNICO EM ADMINISTRAÇÃO', nivel: 'técnico', turno: 'tarde'})
+CREATE (ccomerciotarde:Curso {nome: 'TÉCNICO EM COMÉCIO', nivel: 'técnico', turno: 'tarde'})
+CREATE (ccomercionoite:Curso {nome: 'TÉCNICO EM COMÉCIO', nivel: 'técnico', turno: 'noite'})
+CREATE (cqualidade:Curso {nome: 'TÉCNICO EM QUALIDADE', nivel: 'técnico', turno: 'tarde'})
 
-MATCH (p1:Professor)
-WHERE p1.Nome = 'Havana' AND p1.Sobrenome = 'Alves'
-CREATE (d:Curso {nome: 'MIDS', nivel: 'Integrado', turno: 'manhã'})
-CREATE (d)-[:TEM_COORDENADOR]->(p1);
+CREATE (cadstarde)-[:TEM_COORDENADOR]->(pnilson);
+CREATE (cadsnoite)-[:TEM_COORDENADOR]->(pnilson);
+CREATE (cipi)-[:TEM_COORDENADOR]->(pcarlos);
+CREATE (cipinoite)-[:TEM_COORDENADOR]->(pcarlos);
+CREATE (cmids)-[:TEM_COORDENADOR]->(phavana);
+CREATE (cadm)-[:TEM_COORDENADOR]->(pjacinta);
+CREATE (cqualidade)-[:TEM_COORDENADOR]->(pnatalia);
+CREATE (ccomerciotarde)-[:TEM_COORDENADOR]->(psostenes);
+CREATE (ccomercionoite)-[:TEM_COORDENADOR]->(pdjuri);
 
-MATCH (p2:Professor)
-WHERE p2.Nome = 'Jacinta' AND p2.Sobrenome = 'Raposo'
-CREATE (e:Curso {nome: 'TÉCNICO EM ADMINISTRAÇÃO', nivel: 'técnico', turno: 'tarde'})
-CREATE (e)-[:TEM_COORDENADOR]->(p2);
+CREATE (m9:Matéria {nome: 'AUDITORIAS DA QUALIDADE', ch: 40, eixo: 'Gestão e Negócios'});
+       (m1:Matéria {nome: 'DESENV. WEB 1', ch: 120, eixo: 'Informática e Comunicação'}),
+       (m5:Matéria {nome: 'ENGENHARIA DE SOFTWARE', ch: 60, eixo: 'Informática e Comunicação'}),
+       (m2:Matéria {nome: 'Estrutura de Dados', ch: 90, eixo: 'Informática e Comunicação'}),
+       (m7:Matéria {nome: 'GESTÃO DE PROCESSOS', ch: 40, eixo: 'Gestão e Negócios'}),
+       (m3:Matéria {nome: 'Projeto e Prática 1', ch: 90, eixo: 'Informática e Comunicação'}),
+       (m4:Matéria {nome: 'Projeto e Prática 2', ch: 90, eixo: 'Informática e Comunicação'}),
+       (m6:Matéria {nome: 'LIDERANÇA E TOMADA DE DECISÃO', ch: 45, eixo: 'Gestão e Negócios'}),
+       (m8:Matéria {nome: 'INTROD. A QUALIDADE', ch: 40, eixo: 'Gestão e Negócios'}),
 
-MATCH (p3:Professor)
-WHERE p3.Nome = 'Natália' AND p3.Sobrenome = 'Souza'
-CREATE (f:Curso {nome: 'TÉCNICO EM QUALIDADE', nivel: 'técnico', turno: 'tarde'})
-CREATE (f)-[:TEM_COORDENADOR]->(p3);
+CREATE (peric)-[:LECIONA]->(m1);
+CREATE (peric)-[:LECIONA]->(m2);
+CREATE (peric)-[:LECIONA]->(m4);
+CREATE (pviviane)-[:LECIONA]->(m3);
+CREATE (pjacinta)-[:LECIONA]->(m5)
+CREATE (pjacinta)-[:LECIONA]->(m6);
+CREATE (pjacinta)-[:LECIONA]->(m7);
+CREATE (pjacinta)-[:LECIONA]->(m8);
+CREATE (pjacinta)-[:LECIONA]->(m9);
 
-MATCH (p4:Professor)
-WHERE p4.Nome = 'Sóstenes' AND p4.Sobrenome = 'Cruz'
-CREATE (g:Curso {nome: 'TÉCNICO EM COMÉCIO', nivel: 'técnico', turno: 'tarde'})
-CREATE (g)-[:TEM_COORDENADOR]->(p4);
-
-
-
-MATCH (p5:Professor)
-WHERE p5.Nome = 'Carlos' AND p5.Sobrenome = 'Brasil'
-CREATE (h:Curso {nome: 'INFORMÁTICA PARA INTERNET', nivel: 'técnico', turno: 'tarde'})
-CREATE (h)-[:TEM_COORDENADOR]->(p5);
-
-MATCH (p6:Professor)
-WHERE p6.Nome = 'Nilson' AND p6.Sobrenome = 'Cândido'
-CREATE (i:Curso {nome: 'ADS', nivel: 'superior', turno: 'noite'})
-CREATE (i)-[:TEM_COORDENADOR]->(p6);
-
-MATCH (p7:Professor)
-WHERE p7.Nome = 'Djuri' AND p7.Sobrenome = 'Vieira'
-CREATE (g:Curso {nome: 'TÉCNICO EM COMÉCIO', nivel: 'técnico', turno: 'noite'})
-CREATE (g)-[:TEM_COORDENADOR]->(p7);
+CREATE (m1)-[:PERTENCE_A]->(cmids)
+CREATE (m2)-[:PERTENCE_A]->(cipi)
+CREATE (m3)-[:PERTENCE_A]->(cmids)
+CREATE (m4)-[:PERTENCE_A]->(cipinoite)
+CREATE (m5)-[:PERTENCE_A]->(ccomercionoite)
+CREATE (m6)-[:PERTENCE_A]->(cadm)
+CREATE (m7)-[:PERTENCE_A]->(cqualidade)
+CREATE (m8)-[:PERTENCE_A]->(cqualidade)
+CREATE (m9)-[:PERTENCE_A]->(cqualidade)
 
 
-CREATE (m1:Matéria {nome: 'DESENV. WEB 1', ch: 120, eixo: 'Informática e Comunicação'}),
-    (m2:Matéria {nome: 'DESENV. WEB 2', ch: 120, eixo: 'Informática e Comunicação'}),
-    (m3:Matéria {nome: 'Projeto e Prática 1', ch: 90, eixo: 'Informática e Comunicação'}),
-    (m4:Matéria {nome: 'Projeto e Prática 2', ch: 90, eixo: 'Informática e Comunicação'}),
-    (m5:Matéria {nome: 'ENGENHARIA DE SOFTWARE', ch: 60, eixo: 'Informática e Comunicação'}),
-    (m6:Matéria {nome: 'LIDERANÇA E TOMADA DE DECISÃO', ch: 45, eixo: 'Gestão e Negócios'}),
-    (m7:Matéria {nome: 'GESTÃO DE PROCESSOS', ch: 40, eixo: 'Gestão e Negócios'}),
-    (m8:Matéria {nome: 'INTROD. A QUALIDADE', ch: 40, eixo: 'Gestão e Negócios'}),
-    (m9:Matéria {nome: 'AUDITORIAS DA QUALIDADE', ch: 40, eixo: 'Gestão e Negócios'});
 
-    
-MATCH (c1:Curso {nivel: 'Integrado', turno: 'manhã', nome: 'MIDS'})with m1, c1 limit 1
-CREATE (m1)-[:PERTENCE_A]->(c1)
-MATCH (p1:Professor {Nome: 'Eric', Sobrenome: 'Sales'}) with m1, p1 limit 1
-CREATE (p1)-[:LECIONA]->(m1);
 CREATE (m1)-[:TEM_HORARIO]->(:Horario {sala: 'LAB 3', horarioInicial: '07:15', horarioFinal: '08:00', turma: 'B 2° ANO', diaDaSemana: 'quinta'});
 CREATE (m1)-[:TEM_HORARIO]->(:Horario {sala: 'LAB 3', horarioInicial: '08:00', horarioFinal: '08:45', turma: 'B 2° ANO', diaDaSemana: 'quinta'});
 CREATE (m1)-[:TEM_HORARIO]->(:Horario {sala: 'LAB 3', horarioInicial: '08:45', horarioFinal: '09:45', turma: 'B 2° ANO', diaDaSemana: 'quinta'});
 CREATE (m1)-[:TEM_HORARIO]->(:Horario {sala: 'LAB 3', horarioInicial: '10:30', horarioFinal: '11:15', turma: 'A 2° ANO', diaDaSemana: 'quinta'});
 CREATE (m1)-[:TEM_HORARIO]->(:Horario {sala: 'LAB 3', horarioInicial: '11:15', horarioFinal: '12:00', turma: 'A 2° ANO', diaDaSemana: 'quinta'});
 CREATE (m1)-[:TEM_HORARIO]->(:Horario {sala: 'LAB 3', horarioInicial: '12:00', horarioFinal: '12:45', turma: 'A 2° ANO', diaDaSemana: 'quinta'});
-return null;
-
-CREATE (m2:Matéria {nome: 'DESENV. WEB 1', ch: 40, eixo: 'Informática e Comunicação'})
-MATCH (c2:Curso {nivel: 'técnico', turno: 'noite', nome: 'INFORMÁTICA PARA INTERNET'})with m2, c2 limit 1
-CREATE (m2)-[:PERTENCE_A]->(c2)
-MATCH (p2:Professor {Nome: 'Eric', Sobrenome: 'Sales'}) with c2, p2 limit 1
-CREATE (p2)-[:LECIONA]->(m2);
 CREATE (m2)-[:TEM_HORARIO]->(:Horario {sala: 'LAB 03', horarioInicial: '20:30', horarioFinal: '21:15', turma: '1° periodo', diaDaSemana: 'quarta'});
 CREATE (m2)-[:TEM_HORARIO]->(:Horario {sala: 'LAB 03', horarioInicial: '21:15', horarioFinal: '22:00', turma: '1° periodo', diaDaSemana: 'quarta'});
-return null;
-
-CREATE (m3:Matéria {nome: 'Projeto e Prática 1', ch: 90, eixo: 'Informática e Comunicação'})
-MATCH (c3:Curso {nivel: 'Integrado', turno: 'manhã', nome: 'MIDS'}) with m3, c3 limit 1
-CREATE (m3)-[:PERTENCE_A]->(c3)
-MATCH (p3:Professor {Nome: 'Viviane', Sobrenome: 'Aureliano'}) with m3, p3 limit 1
-CREATE (p3)-[:LECIONA]->(m3);
 CREATE (m3)-[:TEM_HORARIO]->(:Horario {sala: 'LAB 02', horarioInicial: '07:15', horarioFinal: '08:00', turma: 'A 1° ANO', diaDaSemana: 'terça'});
 CREATE (m3)-[:TEM_HORARIO]->(:Horario {sala: 'LAB 02', horarioInicial: '08:00', horarioFinal: '08:45', turma: 'A 1° ANO', diaDaSemana: 'terça'});
 CREATE (m3)-[:TEM_HORARIO]->(:Horario {sala: 'LAB 02', horarioInicial: '08:45', horarioFinal: '09:45', turma: 'A 1° ANO', diaDaSemana: 'terça'});
 CREATE (m3)-[:TEM_HORARIO]->(:Horario {sala: 'LAB 02', horarioInicial: '10:30', horarioFinal: '11:15', turma: 'B 1° ANO', diaDaSemana: 'terça'});
 CREATE (m3)-[:TEM_HORARIO]->(:Horario {sala: 'LAB 02', horarioInicial: '11:15', horarioFinal: '12:00', turma: 'B 1° ANO', diaDaSemana: 'terça'});
 CREATE (m3)-[:TEM_HORARIO]->(:Horario {sala: 'LAB 02', horarioInicial: '12:00', horarioFinal: '12:45', turma: 'B 1° ANO', diaDaSemana: 'terça'});
-return null;
-CREATE (m4:Matéria {nome: 'ENGENHARIA DE SOFTWARE', ch: 60, eixo: 'Informática e Comunicação'})
-MATCH (c4:Curso {nivel: 'técnico', turno: 'noite', nome: 'INFORMÁTICA PARA INTERNET'}) with m4, c4 limit 1
-CREATE (m4)-[:PERTENCE_A]->(c4)
-MATCH (p4:Professor {Nome: 'Eric', Sobrenome: 'Sales'}) with c4, p4 limit 1
-CREATE (p4)-[:LECIONA]->(m4);
 CREATE (m4)-[:TEM_HORARIO]->(:Horario {sala: 'LAB 03', horarioInicial: '18:15', horarioFinal: '19:00', turma: '2° periodo', diaDaSemana: 'terça'});
 CREATE (m4)-[:TEM_HORARIO]->(:Horario {sala: 'LAB 03', horarioInicial: '19:00', horarioFinal: '19:45', turma: '2° periodo', diaDaSemana: 'terça'});
 CREATE (m4)-[:TEM_HORARIO]->(:Horario {sala: 'LAB 03', horarioInicial: '19:45', horarioFinal: '20:30', turma: '2° periodo', diaDaSemana: 'terça'});
 CREATE (m4)-[:TEM_HORARIO]->(:Horario {sala: 'LAB 03', horarioInicial: '20:30', horarioFinal: '21:15', turma: '2° periodo', diaDaSemana: 'terça'});
-return null;
-CREATE (m5:Matéria {nome: 'LIDERANÇA E TOMADA DE DECISÃO', ch: 45, eixo: 'Gestão e Negócios'})
-MATCH (c5:Curso {nivel: 'técnico', turno: 'noite', nome: 'TÉCNICO EM COMÉCIO'}) with m5, c5 limit 1
-CREATE (m5)-[:PERTENCE_A]->(c5)
-MATCH (p5:Professor {Nome: 'Jacinta', Sobrenome: 'Raposo'}) with m5, p5 limit 1
-CREATE (p5)-[:LECIONA]->(m5)
 CREATE (m5)-[:TEM_HORARIO]->(:Horario {sala: 'SALA 06', horarioInicial: '20:30', horarioFinal: '21:15', turma: '2° periodo', diaDaSemana: 'terça'});
 CREATE (m5)-[:TEM_HORARIO]->(:Horario {sala: 'SALA 06', horarioInicial: '21:15', horarioFinal: '22:00', turma: '2° periodo', diaDaSemana: 'terça'});
 CREATE (m5)-[:TEM_HORARIO]->(:Horario {sala: 'SALA 06', horarioInicial: '20:30', horarioFinal: '21:15', turma: '3° periodo', diaDaSemana: 'terça'});
 CREATE (m5)-[:TEM_HORARIO]->(:Horario {sala: 'SALA 06', horarioInicial: '21:15', horarioFinal: '22:00', turma: '3° periodo', diaDaSemana: 'terça'});
-return null;
-
-CREATE (m6:Matéria {nome: 'GESTÃO DE PROCESSOS', ch: 40, eixo: 'Gestão e Negócios'})
-MATCH (c6:Curso {nivel: 'técnico', turno: 'tarde', nome: 'TÉCNICO EM ADMINISTRAÇÃO'})with m6, c6 limit 1
-CREATE (m6)-[:PERTENCE_A]->(c6)
-MATCH (p6:Professor {Nome: 'Jacinta', Sobrenome: 'Raposo'}) with m6, p6 limit 1
-CREATE (p6)-[:LECIONA]->(m6);
 CREATE (m6)-[:TEM_HORARIO]->(:Horario {sala: 'LAB 04', horarioInicial: '13:30', horarioFinal: '14:15', turma: '1° periodo', diaDaSemana: 'quarta'});
 CREATE (m6)-[:TEM_HORARIO]->(:Horario {sala: 'LAB 04', horarioInicial: '14:15', horarioFinal: '15:00', turma: '1° periodo', diaDaSemana: 'quarta'});
-return null;
-
-CREATE (m7:Matéria {nome: 'GESTÃO DE PROCESSOS', ch: 40, eixo: 'Gestão e Negócios'})
-MATCH (c7:Curso {nivel: 'técnico', turno: 'tarde', nome: 'TÉCNICO EM QUALIDADE'}) with m7, c7 limit 1
-CREATE (m7)-[:PERTENCE_A]->(c7)
-MATCH (p7:Professor {Nome: 'Jacinta', Sobrenome: 'Raposo'}) with m7, p7 limit 1
-CREATE (p7)-[:LECIONA]->(m7);
 CREATE (m7)-[:TEM_HORARIO]->(:Horario {sala: 'LAB 04', horarioInicial: '14:15', horarioFinal: '15:00', turma: '1° periodo', diaDaSemana: 'segunda'});
 CREATE (m7)-[:TEM_HORARIO]->(:Horario {sala: 'LAB 04', horarioInicial: '15:00', horarioFinal: '15:45', turma: '1° periodo', diaDaSemana: 'segunda'});
-return null;
-
-CREATE (m8:Matéria {nome: 'INTROD. A QUALIDADE', ch: 40, eixo: 'Gestão e Negócios'})
-MATCH (c8:Curso {nivel: 'técnico', turno: 'tarde', nome: 'TÉCNICO EM QUALIDADE'}) with m8, c8 limit 1
-CREATE (m8)-[:PERTENCE_A]->(c8)
-MATCH (p8:Professor {Nome: 'Jacinta', Sobrenome: 'Raposo'}) with m8,p8 limit 1
-CREATE (p8)-[:LECIONA]->(m8);
 CREATE (m8)-[:TEM_HORARIO]->(:Horario {sala: 'SALA 06', horarioInicial: '16:00', horarioFinal: '16:45', turma: '1° periodo', diaDaSemana: 'quarta'});
 CREATE (m8)-[:TEM_HORARIO]->(:Horario {sala: 'SALA 06', horarioInicial: '16:45', horarioFinal: '17:30', turma: '1° periodo', diaDaSemana: 'quarta'});
-return null;
-
-CREATE (m9:Matéria {nome: 'AUDITORIAS DA QUALIDADE', ch: 40, eixo: 'Gestão e Negócios'})
-MATCH (c9:Curso {nivel: 'técnico', turno: 'tarde', nome: 'TÉCNICO EM QUALIDADE'}) with m9, c9 limit 1
-CREATE (m9)-[:PERTENCE_A]->(c9)
-MATCH (p9:Professor {Nome: 'Jacinta', Sobrenome: 'Raposo'}) with m9, p9 limit 1
-CREATE (p9)-[:LECIONA]->(m9);
 CREATE (m9)-[:TEM_HORARIO]->(:Horario {sala: 'LAB 04', horarioInicial: '15:00', horarioFinal: '15:45', turma: '2º periodo', diaDaSemana: 'segunda'});
 CREATE (m9)-[:TEM_HORARIO]->(:Horario {sala: 'LAB 04', horarioInicial: '16:00', horarioFinal: '16:45', turma: '2º periodo', diaDaSemana: 'segunda'});
 CREATE (m9)-[:TEM_HORARIO]->(:Horario {sala: 'LAB 04', horarioInicial: '16:45', horarioFinal: '17:30', turma: '2º periodo', diaDaSemana: 'segunda'});
-return null;
-
-
 
 CREATE (:Aluno {nome: 'Alice Moreira da Silva', idade: 18, cidade: 'Jaboatão dos Guararapes', formacaoAnterior: 'Técnico em Administração'}),
     (:Aluno {nome: 'Bruno Henrique Costa', idade: 18, cidade: 'Recife', formacaoAnterior: 'Técnico em Enfermagem'}),

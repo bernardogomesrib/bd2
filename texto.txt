@@ -13,3 +13,4 @@ HMSET link:fight link /fight descricao "só lutas!"
 KEYS link:*
 
 HGETALL link:tv
+
