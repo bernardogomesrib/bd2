@@ -2,11 +2,11 @@ CREATE (peric:Professor {Nome: 'Eric', Sobrenome: 'Sales', Idade: 33, Formação
        (pviviane:Professor {Nome: 'Viviane', Sobrenome: 'Aureliano', Idade: 44, Formação: 'Ciênica da Computação', Titulo: 'Doutora', isCoordenador: FALSE}),
        (pjacinta:Professor {Nome: 'Jacinta', Sobrenome: 'Raposo', Idade: 40, Formação: 'Administração', Titulo: 'Mestre', isCoordenador: TRUE}),
        (pcarlos:Professor {Nome: 'Carlos', Sobrenome: 'Brasil', Idade: 42, Formação: 'Ciência da Computação', Titulo: 'Mestre', isCoordenador: TRUE}),
-       (pnilson:Professor {Nome: 'Nilson', Sobrenome: 'Cândido', Idade: 38, Formação: 'Sistema de Informação', Titulo: 'Mestre', isCoordenador: TRUE}),
+       (pnilson:Professor {Nome: 'Nilson', Sobrenome: 'Cândido', Idade: 38, Formação: 'Sistemas de Informação', Titulo: 'Mestre', isCoordenador: TRUE}),
        (psostenes:Professor {Nome: 'Sóstenes', Sobrenome: 'Cruz', Idade: 35, Formação: 'Ciências Contábeis', Titulo: 'Mestre', isCoordenador: TRUE}),
        (pdjuri:Professor {Nome: 'Djuri', Sobrenome: 'Vieira', Idade: 50, Formação: 'Engenharia de Produção', Titulo: 'Mestre', isCoordenador: TRUE}),
        (pnatalia:Professor {Nome: 'Natália', Sobrenome: 'Souza', Idade: 31, Formação: 'Administração', Titulo: 'Mestre', isCoordenador: TRUE}),
-       (phavana:Professor {Nome: 'Havana', Sobrenome: 'Alves', Idade: 34, Formação: 'Engenharia da Computação', Titulo: 'Mestre', isCoordenador: TRUE});;
+       (phavana:Professor {Nome: 'Havana', Sobrenome: 'Alves', Idade: 34, Formação: 'Engenharia da Computação', Titulo: 'Mestre', isCoordenador: TRUE})
 
 CREATE (cadstarde:Curso {nome: 'ADS', nivel: 'superior', turno: 'tarde'})
 CREATE (cadsnoite:Curso {nome: 'ADS', nivel: 'superior', turno: 'noite'})
@@ -18,218 +18,232 @@ CREATE (ccomerciotarde:Curso {nome: 'TÉCNICO EM COMÉCIO', nivel: 'técnico', t
 CREATE (ccomercionoite:Curso {nome: 'TÉCNICO EM COMÉCIO', nivel: 'técnico', turno: 'noite'})
 CREATE (cqualidade:Curso {nome: 'TÉCNICO EM QUALIDADE', nivel: 'técnico', turno: 'tarde'})
 
-CREATE (cadstarde)-[:TEM_COORDENADOR]->(pnilson);
-CREATE (cadsnoite)-[:TEM_COORDENADOR]->(pnilson);
-CREATE (cipi)-[:TEM_COORDENADOR]->(pcarlos);
-CREATE (cipinoite)-[:TEM_COORDENADOR]->(pcarlos);
-CREATE (cmids)-[:TEM_COORDENADOR]->(phavana);
-CREATE (cadm)-[:TEM_COORDENADOR]->(pjacinta);
-CREATE (cqualidade)-[:TEM_COORDENADOR]->(pnatalia);
-CREATE (ccomerciotarde)-[:TEM_COORDENADOR]->(psostenes);
-CREATE (ccomercionoite)-[:TEM_COORDENADOR]->(pdjuri);
+CREATE (cadstarde)-[:TEM_COORDENADOR]->(pnilson)
+CREATE (cadsnoite)-[:TEM_COORDENADOR]->(pnilson)
+CREATE (cipi)-[:TEM_COORDENADOR]->(pcarlos)
+CREATE (cipinoite)-[:TEM_COORDENADOR]->(pcarlos)
+CREATE (cmids)-[:TEM_COORDENADOR]->(phavana)
+CREATE (cadm)-[:TEM_COORDENADOR]->(pjacinta)
+CREATE (cqualidade)-[:TEM_COORDENADOR]->(pnatalia)
+CREATE (ccomerciotarde)-[:TEM_COORDENADOR]->(psostenes)
+CREATE (ccomercionoite)-[:TEM_COORDENADOR]->(pdjuri)
 
-CREATE (m9:Matéria {nome: 'AUDITORIAS DA QUALIDADE', ch: 40, eixo: 'Gestão e Negócios'});
-       (m1:Matéria {nome: 'DESENV. WEB 1', ch: 120, eixo: 'Informática e Comunicação'}),
-       (m5:Matéria {nome: 'ENGENHARIA DE SOFTWARE', ch: 60, eixo: 'Informática e Comunicação'}),
-       (m2:Matéria {nome: 'Estrutura de Dados', ch: 90, eixo: 'Informática e Comunicação'}),
-       (m7:Matéria {nome: 'GESTÃO DE PROCESSOS', ch: 40, eixo: 'Gestão e Negócios'}),
-       (m3:Matéria {nome: 'Projeto e Prática 1', ch: 90, eixo: 'Informática e Comunicação'}),
-       (m4:Matéria {nome: 'Projeto e Prática 2', ch: 90, eixo: 'Informática e Comunicação'}),
-       (m6:Matéria {nome: 'LIDERANÇA E TOMADA DE DECISÃO', ch: 45, eixo: 'Gestão e Negócios'}),
-       (m8:Matéria {nome: 'INTROD. A QUALIDADE', ch: 40, eixo: 'Gestão e Negócios'}),
+CREATE (m9:Disciplina {nome: 'AUDITORIAS DA QUALIDADE', ch: 40, eixo: 'Gestão e Negócios'}),
+       (m1:Disciplina {nome: 'DESENV. WEB 1', ch: 120, eixo: 'Informática e Comunicação'}),
+       (m5:Disciplina {nome: 'ENGENHARIA DE SOFTWARE', ch: 60, eixo: 'Informática e Comunicação'}),
+       (m2:Disciplina {nome: 'Estrutura de Dados', ch: 90, eixo: 'Informática e Comunicação'}),
+       (m7:Disciplina {nome: 'GESTÃO DE PROCESSOS', ch: 40, eixo: 'Gestão e Negócios'}),
+       (m4:Disciplina {nome: 'GESTÃO DA QUALIDADE', ch: 40, eixo: 'Gestão e Negócios'}),
+       (m3:Disciplina {nome: 'Projeto e Prática 1', ch: 90, eixo: 'Informática e Comunicação'}),
+       (m6:Disciplina {nome: 'LIDERANÇA E TOMADA DE DECISÃO', ch: 45, eixo: 'Gestão e Negócios'}),
+       (m8:Disciplina {nome: 'INTROD. A QUALIDADE', ch: 40, eixo: 'Gestão e Negócios'}),
+       (m10:Disciplina {nome: 'LOGICA DE PROGRAMAÇÃO', ch: 120,eixo: 'Informática e Comunicação'})
 
-CREATE (peric)-[:LECIONA]->(m1);
-CREATE (peric)-[:LECIONA]->(m2);
-CREATE (peric)-[:LECIONA]->(m4);
-CREATE (pviviane)-[:LECIONA]->(m3);
-CREATE (pjacinta)-[:LECIONA]->(m5)
-CREATE (pjacinta)-[:LECIONA]->(m6);
-CREATE (pjacinta)-[:LECIONA]->(m7);
-CREATE (pjacinta)-[:LECIONA]->(m8);
-CREATE (pjacinta)-[:LECIONA]->(m9);
-
-CREATE (m1)-[:PERTENCE_A]->(cmids)
-CREATE (m2)-[:PERTENCE_A]->(cipi)
-CREATE (m3)-[:PERTENCE_A]->(cmids)
-CREATE (m4)-[:PERTENCE_A]->(cipinoite)
-CREATE (m5)-[:PERTENCE_A]->(ccomercionoite)
-CREATE (m6)-[:PERTENCE_A]->(cadm)
-CREATE (m7)-[:PERTENCE_A]->(cqualidade)
-CREATE (m8)-[:PERTENCE_A]->(cqualidade)
-CREATE (m9)-[:PERTENCE_A]->(cqualidade)
+CREATE (m1)-[:faz_parte]->(cmids)
+CREATE (m3)-[:faz_parte]->(cmids)
+CREATE (m2)-[:faz_parte]->(cadsnoite)
+CREATE (m5)-[:faz_parte]->(cipinoite)
+CREATE (m6)-[:faz_parte]->(cadm)
+CREATE (m7)-[:faz_parte]->(cqualidade)
+CREATE (m8)-[:faz_parte]->(cqualidade)
+CREATE (m9)-[:faz_parte]->(cqualidade)
 
 
 
-CREATE (m1)-[:TEM_HORARIO]->(:Horario {sala: 'LAB 3', horarioInicial: '07:15', horarioFinal: '08:00', turma: 'B 2° ANO', diaDaSemana: 'quinta'});
-CREATE (m1)-[:TEM_HORARIO]->(:Horario {sala: 'LAB 3', horarioInicial: '08:00', horarioFinal: '08:45', turma: 'B 2° ANO', diaDaSemana: 'quinta'});
-CREATE (m1)-[:TEM_HORARIO]->(:Horario {sala: 'LAB 3', horarioInicial: '08:45', horarioFinal: '09:45', turma: 'B 2° ANO', diaDaSemana: 'quinta'});
-CREATE (m1)-[:TEM_HORARIO]->(:Horario {sala: 'LAB 3', horarioInicial: '10:30', horarioFinal: '11:15', turma: 'A 2° ANO', diaDaSemana: 'quinta'});
-CREATE (m1)-[:TEM_HORARIO]->(:Horario {sala: 'LAB 3', horarioInicial: '11:15', horarioFinal: '12:00', turma: 'A 2° ANO', diaDaSemana: 'quinta'});
-CREATE (m1)-[:TEM_HORARIO]->(:Horario {sala: 'LAB 3', horarioInicial: '12:00', horarioFinal: '12:45', turma: 'A 2° ANO', diaDaSemana: 'quinta'});
-CREATE (m2)-[:TEM_HORARIO]->(:Horario {sala: 'LAB 03', horarioInicial: '20:30', horarioFinal: '21:15', turma: '1° periodo', diaDaSemana: 'quarta'});
-CREATE (m2)-[:TEM_HORARIO]->(:Horario {sala: 'LAB 03', horarioInicial: '21:15', horarioFinal: '22:00', turma: '1° periodo', diaDaSemana: 'quarta'});
-CREATE (m3)-[:TEM_HORARIO]->(:Horario {sala: 'LAB 02', horarioInicial: '07:15', horarioFinal: '08:00', turma: 'A 1° ANO', diaDaSemana: 'terça'});
-CREATE (m3)-[:TEM_HORARIO]->(:Horario {sala: 'LAB 02', horarioInicial: '08:00', horarioFinal: '08:45', turma: 'A 1° ANO', diaDaSemana: 'terça'});
-CREATE (m3)-[:TEM_HORARIO]->(:Horario {sala: 'LAB 02', horarioInicial: '08:45', horarioFinal: '09:45', turma: 'A 1° ANO', diaDaSemana: 'terça'});
-CREATE (m3)-[:TEM_HORARIO]->(:Horario {sala: 'LAB 02', horarioInicial: '10:30', horarioFinal: '11:15', turma: 'B 1° ANO', diaDaSemana: 'terça'});
-CREATE (m3)-[:TEM_HORARIO]->(:Horario {sala: 'LAB 02', horarioInicial: '11:15', horarioFinal: '12:00', turma: 'B 1° ANO', diaDaSemana: 'terça'});
-CREATE (m3)-[:TEM_HORARIO]->(:Horario {sala: 'LAB 02', horarioInicial: '12:00', horarioFinal: '12:45', turma: 'B 1° ANO', diaDaSemana: 'terça'});
-CREATE (m4)-[:TEM_HORARIO]->(:Horario {sala: 'LAB 03', horarioInicial: '18:15', horarioFinal: '19:00', turma: '2° periodo', diaDaSemana: 'terça'});
-CREATE (m4)-[:TEM_HORARIO]->(:Horario {sala: 'LAB 03', horarioInicial: '19:00', horarioFinal: '19:45', turma: '2° periodo', diaDaSemana: 'terça'});
-CREATE (m4)-[:TEM_HORARIO]->(:Horario {sala: 'LAB 03', horarioInicial: '19:45', horarioFinal: '20:30', turma: '2° periodo', diaDaSemana: 'terça'});
-CREATE (m4)-[:TEM_HORARIO]->(:Horario {sala: 'LAB 03', horarioInicial: '20:30', horarioFinal: '21:15', turma: '2° periodo', diaDaSemana: 'terça'});
-CREATE (m5)-[:TEM_HORARIO]->(:Horario {sala: 'SALA 06', horarioInicial: '20:30', horarioFinal: '21:15', turma: '2° periodo', diaDaSemana: 'terça'});
-CREATE (m5)-[:TEM_HORARIO]->(:Horario {sala: 'SALA 06', horarioInicial: '21:15', horarioFinal: '22:00', turma: '2° periodo', diaDaSemana: 'terça'});
-CREATE (m5)-[:TEM_HORARIO]->(:Horario {sala: 'SALA 06', horarioInicial: '20:30', horarioFinal: '21:15', turma: '3° periodo', diaDaSemana: 'terça'});
-CREATE (m5)-[:TEM_HORARIO]->(:Horario {sala: 'SALA 06', horarioInicial: '21:15', horarioFinal: '22:00', turma: '3° periodo', diaDaSemana: 'terça'});
-CREATE (m6)-[:TEM_HORARIO]->(:Horario {sala: 'LAB 04', horarioInicial: '13:30', horarioFinal: '14:15', turma: '1° periodo', diaDaSemana: 'quarta'});
-CREATE (m6)-[:TEM_HORARIO]->(:Horario {sala: 'LAB 04', horarioInicial: '14:15', horarioFinal: '15:00', turma: '1° periodo', diaDaSemana: 'quarta'});
-CREATE (m7)-[:TEM_HORARIO]->(:Horario {sala: 'LAB 04', horarioInicial: '14:15', horarioFinal: '15:00', turma: '1° periodo', diaDaSemana: 'segunda'});
-CREATE (m7)-[:TEM_HORARIO]->(:Horario {sala: 'LAB 04', horarioInicial: '15:00', horarioFinal: '15:45', turma: '1° periodo', diaDaSemana: 'segunda'});
-CREATE (m8)-[:TEM_HORARIO]->(:Horario {sala: 'SALA 06', horarioInicial: '16:00', horarioFinal: '16:45', turma: '1° periodo', diaDaSemana: 'quarta'});
-CREATE (m8)-[:TEM_HORARIO]->(:Horario {sala: 'SALA 06', horarioInicial: '16:45', horarioFinal: '17:30', turma: '1° periodo', diaDaSemana: 'quarta'});
-CREATE (m9)-[:TEM_HORARIO]->(:Horario {sala: 'LAB 04', horarioInicial: '15:00', horarioFinal: '15:45', turma: '2º periodo', diaDaSemana: 'segunda'});
-CREATE (m9)-[:TEM_HORARIO]->(:Horario {sala: 'LAB 04', horarioInicial: '16:00', horarioFinal: '16:45', turma: '2º periodo', diaDaSemana: 'segunda'});
-CREATE (m9)-[:TEM_HORARIO]->(:Horario {sala: 'LAB 04', horarioInicial: '16:45', horarioFinal: '17:30', turma: '2º periodo', diaDaSemana: 'segunda'});
-
-CREATE (:Aluno {nome: 'Alice Moreira da Silva', idade: 18, cidade: 'Jaboatão dos Guararapes', formacaoAnterior: 'Técnico em Administração'}),
-    (:Aluno {nome: 'Bruno Henrique Costa', idade: 18, cidade: 'Recife', formacaoAnterior: 'Técnico em Enfermagem'}),
-    (:Aluno {nome: 'Camila Fernanda Almeida', idade: 20, cidade: 'Olinda', formacaoAnterior: 'Técnico em Administração'}),
-    (:Aluno {nome: 'Daniel Augusto Pereira', idade: 17, cidade: 'Cabo de Santo Agostinho', formacaoAnterior: 'Técnico em Mecânica'}),
-    (:Aluno {nome: 'Eduardo Luiz Ribeiro', idade: 19, cidade: 'Ipojuca', formacaoAnterior: 'Técnico em Química'}),
-    (:Aluno {nome: 'Fernanda Cristina Oliveira', idade: 32, cidade: 'Moreno', formacaoAnterior: 'Técnico em Mecânica'}),
-    (:Aluno {nome: 'Gabriel Monteiro Santos', idade: 21, cidade: 'São Lourenço da Mata', formacaoAnterior: 'Técnico em Enfermagem'}),
-    (:Aluno {nome: 'Helena Rodrigues Lima', idade: 22, cidade: 'Abreu e Lima', formacaoAnterior: 'Técnico em Edificações'}),
-    (:Aluno {nome: 'Igor Matheus Andrade', idade: 20, cidade: 'Paulista', formacaoAnterior: 'Técnico em Enfermagem'}),
-    (:Aluno {nome: 'Juliana Maria Souza', idade: 23, cidade: 'Camaragibe', formacaoAnterior: 'Técnico em Química'}),
-    (:Aluno {nome: 'Karina Letícia Gonçalves', idade: 17, cidade: 'Igarassu', formacaoAnterior: 'Técnico em Informática'}),
-    (:Aluno {nome: 'Leonardo César Farias', idade: 35, cidade: 'Itapissuma', formacaoAnterior: 'Técnico em Enfermagem'}),
-    (:Aluno {nome: 'Mariana Lopes Barreto', idade: 19, cidade: 'Araçoiaba', formacaoAnterior: 'Técnico em Edificações'}),
-    (:Aluno {nome: 'Nathalia Duarte Freitas', idade: 26, cidade: 'Vitória de Santo Antão', formacaoAnterior: 'Técnico em Química'}),
-    (:Aluno {nome: 'Otávio Vinícius Carvalho', idade: 40, cidade: 'Escada', formacaoAnterior: 'Técnico em Administração'}),
-    (:Aluno {nome: 'Patrícia Regina Azevedo', idade: 35, cidade: 'Pombos', formacaoAnterior: 'Técnico em Informática'}),
-    (:Aluno {nome: 'Rafael Antunes Mendes', idade: 33, cidade: 'Chã de Alegria', formacaoAnterior: 'Técnico em Química'}),
-    (:Aluno {nome: 'Sofia Vitória Martins', idade: 21, cidade: 'Sirinhaém', formacaoAnterior: 'Técnico em Administração'}),
-    (:Aluno {nome: 'Thiago Felipe Nascimento', idade: 20, cidade: 'Glória do Goitá', formacaoAnterior: 'Técnico em Mecânica'}),
-    (:Aluno {nome: 'Vanessa Teixeira Ramos', idade: 19, cidade: 'Primavera', formacaoAnterior: 'Técnico em Eletrônica'}),
-    (:Aluno {nome: 'André Luís Peixoto', idade: 23, cidade: 'Amaraji', formacaoAnterior: 'Técnico em Informática'}),
-    (:Aluno {nome: 'Beatriz Almeida Torres', idade: 25, cidade: 'Cortês', formacaoAnterior: 'Técnico em Enfermagem'}),
-    (:Aluno {nome: 'Caio Eduardo Fernandes', idade: 21, cidade: 'Gravatá', formacaoAnterior: 'Técnico em Enfermagem'}),
-    (:Aluno {nome: 'Débora Aparecida Pires', idade: 23, cidade: 'Ribeirão', formacaoAnterior: 'Técnico em Edificações'}),
-    (:Aluno {nome: 'Felipe Henrique Sampaio', idade: 22, cidade: 'Carpina', formacaoAnterior: 'Técnico em Mecânica'}),
-    (:Aluno {nome: 'Giovanna Luz Santana', idade: 21, cidade: 'Lagoa do Carro', formacaoAnterior: 'Técnico em Eletrônica'}),
-    (:Aluno {nome: 'Henrique Guilherme Ribeiro', idade: 25, cidade: 'Lagoa de Itaenga', formacaoAnterior: 'Técnico em Mecânica'}),
-    (:Aluno {nome: 'Isabela Cristine Figueiredo', idade: 26, cidade: 'Nazaré da Mata', formacaoAnterior: 'Técnico em Química'}),
-    (:Aluno {nome: 'João Pedro Cardoso', idade: 27, cidade: 'Aliança', formacaoAnterior: 'Técnico em Administração'}),
-    (:Aluno {nome: 'Larissa Silva Moura', idade: 28, cidade: 'Tracunhaém', formacaoAnterior: 'Técnico em Informática'}),
-    (:Aluno {nome: 'Matheus Augusto Brito', idade: 15, cidade: 'Paudalho', formacaoAnterior: NULL}),
-    (:Aluno {nome: 'Nicole Beatriz Dias', idade: 16, cidade: 'São Vicente Férrer', formacaoAnterior: NULL}),
-    (:Aluno {nome: 'Pedro Henrique Amaral', idade: 18, cidade: 'Ferreiros', formacaoAnterior: NULL}),
-    (:Aluno {nome: 'Roberta Emília Castro', idade: 15, cidade: 'Itaquitinga', formacaoAnterior: NULL}),
-    (:Aluno {nome: 'Samuel Vinícius Gomes', idade: 20, cidade: 'Timbaúba', formacaoAnterior: NULL});
+CREATE (peric)-[ministra:ministra]->(m1)
+CREATE (:Turno {sala: 'LAB 03', horarioInicial: '07:15', horarioFinal: '08:00', turma: 'B 2° ANO', diaDaSemana: 'quinta'})-[:horario]->(peric)
+CREATE (:Turno {sala: 'LAB 03', horarioInicial: '08:00', horarioFinal: '08:45', turma: 'B 2° ANO', diaDaSemana: 'quinta'})-[:horario]->(peric)
+CREATE (:Turno {sala: 'LAB 03', horarioInicial: '08:45', horarioFinal: '09:45', turma: 'B 2° ANO', diaDaSemana: 'quinta'})-[:horario]->(peric)
+CREATE (:Turno {sala: 'LAB 03', horarioInicial: '10:30', horarioFinal: '11:15', turma: 'A 2° ANO', diaDaSemana: 'quinta'})-[:horario]->(peric)
+CREATE (:Turno {sala: 'LAB 03', horarioInicial: '11:15', horarioFinal: '12:00', turma: 'A 2° ANO', diaDaSemana: 'quinta'})-[:horario]->(peric)
+CREATE (:Turno {sala: 'LAB 03', horarioInicial: '12:00', horarioFinal: '12:45', turma: 'A 2° ANO', diaDaSemana: 'quinta'})-[:horario]->(peric)
 
 
-MATCH (a:Aluno {nome: 'Alice Moreira da Silva'}), (c:Curso {nome: 'ADS', turno: 'tarde'})
-CREATE (a)-[:ESTUDA]->(c);
+CREATE (peric)-[mn5:ministra]->(m5)
+CREATE (:Turno {sala: 'LAB 03', horarioInicial: '18:15', horarioFinal: '19:00', turma: '2° periodo', diaDaSemana: 'terça'})-[:horario]->(peric)
+CREATE (:Turno {sala: 'LAB 03', horarioInicial: '19:00', horarioFinal: '19:45', turma: '2° periodo', diaDaSemana: 'terça'})-[:horario]->(peric)
+CREATE (:Turno {sala: 'LAB 03', horarioInicial: '19:45', horarioFinal: '20:30', turma: '2° periodo', diaDaSemana: 'terça'})-[:horario]->(peric)
+CREATE (:Turno {sala: 'LAB 03', horarioInicial: '20:30', horarioFinal: '21:15', turma: '2° periodo', diaDaSemana: 'terça'})-[:horario]->(peric)
 
-MATCH (a:Aluno {nome: 'Bruno Henrique Costa'}), (c:Curso {nome: 'ADS', turno: 'tarde'})
-CREATE (a)-[:ESTUDA]->(c);
+CREATE (pjacinta)-[mn7:ministra]->(m7)
+CREATE (:Turno {sala: 'LAB 04', horarioInicial: '13:30', horarioFinal: '14:15', turma: '1° periodo', diaDaSemana: 'quarta'})-[:horario]->(pjacinta)
+CREATE (:Turno {sala: 'LAB 04', horarioInicial: '14:15', horarioFinal: '15:00', turma: '1° periodo', diaDaSemana: 'quarta'})-[:horario]->(pjacinta)
 
-MATCH (a:Aluno {nome: 'Camila Fernanda Almeida'}), (c:Curso {nome: 'ADS', turno: 'tarde'})
-CREATE (a)-[:ESTUDA]->(c);
+CREATE (pjacinta)-[mn8:ministra]->(m8)
+CREATE (:Turno {sala: 'SALA 06', horarioInicial: '16:00', horarioFinal: '16:45', turma: '1° periodo', diaDaSemana: 'quarta'})-[:horario]->(pjacinta)
+CREATE (:Turno {sala: 'SALA 06', horarioInicial: '16:45', horarioFinal: '17:30', turma: '1° periodo', diaDaSemana: 'quarta'})-[:horario]->(pjacinta)
 
-MATCH (a:Aluno {nome: 'Daniel Augusto Pereira'}), (c:Curso {nome: 'ADS', turno: 'tarde'})
-CREATE (a)-[:ESTUDA]->(c);
+CREATE (pjacinta)-[mn9:ministra]->(m9)
+CREATE (:Turno {sala: 'LAB 04', horarioInicial: '15:00', horarioFinal: '15:45', turma: '2º periodo', diaDaSemana: 'segunda'})-[:horario]->(pjacinta)
+CREATE (:Turno {sala: 'LAB 04', horarioInicial: '16:00', horarioFinal: '16:45', turma: '2º periodo', diaDaSemana: 'segunda'})-[:horario]->(pjacinta)
+CREATE (:Turno {sala: 'LAB 04', horarioInicial: '16:45', horarioFinal: '17:30', turma: '2º periodo', diaDaSemana: 'segunda'})-[:horario]->(pjacinta)
+CREATE (:Turno {sala: 'SALA 06', horarioInicial: '14:15', horarioFinal: '15:00', turma: '1° periodo', diaDaSemana: 'segunda'})-[:horario]->(pjacinta)
+CREATE (:Turno {sala: 'SALA 06', horarioInicial: '15:00', horarioFinal: '15:45', turma: '1° periodo', diaDaSemana: 'segunda'})-[:horario]->(pjacinta)
 
-MATCH (a:Aluno {nome: 'Eduardo Luiz Ribeiro'}), (c:Curso {nome: 'ADS', turno: 'tarde'})
-CREATE (a)-[:ESTUDA]->(c);
 
-MATCH (a:Aluno {nome: 'Fernanda Cristina Oliveira'}), (c:Curso {nome: 'ADS', turno: 'noite'})
-CREATE (a)-[:ESTUDA]->(c);
+CREATE (pjacinta)-[mn10:ministra]->(m4)
+CREATE (:Turno {sala: 'SALA 05', horarioInicial: '15:00', horarioFinal: '15:45', turma: '3° periodo', diaDaSemana: 'terça'})-[:horario]->(pjacinta)
+CREATE (:Turno {sala: 'SALA 05', horarioInicial: '16:00', horarioFinal: '16:45', turma: '3° periodo', diaDaSemana: 'terça'})-[:horario]->(pjacinta)
+CREATE (:Turno {sala: 'SALA 05', horarioInicial: '16:45', horarioFinal: '17:30', turma: '3° periodo', diaDaSemana: 'terça'})-[:horario]->(pjacinta)
+                                
 
-MATCH (a:Aluno {nome: 'Gabriel Monteiro Santos'}), (c:Curso {nome: 'ADS', turno: 'noite'})
-CREATE (a)-[:ESTUDA]->(c);
 
-MATCH (a:Aluno {nome: 'Helena Rodrigues Lima'}), (c:Curso {nome: 'ADS', turno: 'noite'})
-CREATE (a)-[:ESTUDA]->(c);
+CREATE (pjacinta)-[mn6:ministra]->(m6)
+CREATE (:Turno {sala: 'SALA 06', horarioInicial: '20:30', horarioFinal: '21:15', turma: '2° periodo', diaDaSemana: 'terça'})-[:horario]->(pjacinta)
+CREATE (:Turno {sala: 'SALA 06', horarioInicial: '21:15', horarioFinal: '22:00', turma: '2° periodo', diaDaSemana: 'terça'})-[:horario]->(pjacinta)
+CREATE (:Turno {sala: 'SALA 06', horarioInicial: '20:30', horarioFinal: '21:15', turma: '3° periodo', diaDaSemana: 'terça'})-[:horario]->(pjacinta)
+CREATE (:Turno {sala: 'SALA 06', horarioInicial: '21:15', horarioFinal: '22:00', turma: '3° periodo', diaDaSemana: 'terça'})-[:horario]->(pjacinta)
 
-MATCH (a:Aluno {nome: 'Igor Matheus Andrade'}), (c:Curso {nome: 'ADS', turno: 'noite'})
-CREATE (a)-[:ESTUDA]->(c);
 
-MATCH (a:Aluno {nome: 'Juliana Maria Souza'}), (c:Curso {nome: 'ADS', turno: 'noite'})
-CREATE (a)-[:ESTUDA]->(c);
+CREATE (pviviane)-[mn2:ministra]->(m2)
+CREATE (:Turno {sala: 'LAB 07', horarioInicial: '18:15', horarioFinal: '19:00', turma: '2° periodo', diaDaSemana: 'segunda'})-[:horario]->(pviviane)
+CREATE (:Turno {sala: 'LAB 07', horarioInicial: '19:00', horarioFinal: '19:45', turma: '2° periodo', diaDaSemana: 'segunda'})-[:horario]->(pviviane)
+CREATE (:Turno {sala: 'LAB 07', horarioInicial: '19:45', horarioFinal: '20:30', turma: '2° periodo', diaDaSemana: 'segunda'})-[:horario]->(pviviane)
 
-MATCH (a:Aluno {nome: 'Karina Letícia Gonçalves'}), (c:Curso {nome: 'INFORMÁTICA PARA INTERNET', turno: 'tarde'})
-CREATE (a)-[:ESTUDA]->(c);
 
-MATCH (a:Aluno {nome: 'Leonardo César Farias'}), (c:Curso {nome: 'INFORMÁTICA PARA INTERNET', turno: 'tarde'})
-CREATE (a)-[:ESTUDA]->(c);
+CREATE (pviviane)-[mn4:ministra]->(m10)
+CREATE (:Turno {sala: 'LAB 07', horarioInicial: '13:30', horarioFinal: '14:15', turma: '1° periodo', diaDaSemana: 'segunda'})-[:horario]->(pviviane)
+CREATE (:Turno {sala: 'LAB 07', horarioInicial: '14:15', horarioFinal: '15:00', turma: '1° periodo', diaDaSemana: 'segunda'})-[:horario]->(pviviane)
+CREATE (:Turno {sala: 'LAB 07', horarioInicial: '15:00', horarioFinal: '15:45', turma: '1° periodo', diaDaSemana: 'segunda'})-[:horario]->(pviviane)
+CREATE (:Turno {sala: 'LAB 07', horarioInicial: '16:00', horarioFinal: '16:45', turma: '1° periodo', diaDaSemana: 'segunda'})-[:horario]->(pviviane)
+CREATE (:Turno {sala: 'LAB 07', horarioInicial: '16:45', horarioFinal: '17:30', turma: '1° periodo', diaDaSemana: 'segunda'})-[:horario]->(pviviane)
 
-MATCH (a:Aluno {nome: 'Mariana Lopes Barreto'}), (c:Curso {nome: 'INFORMÁTICA PARA INTERNET', turno: 'tarde'})
-CREATE (a)-[:ESTUDA]->(c);
 
-MATCH (a:Aluno {nome: 'Nathalia Duarte Freitas'}), (c:Curso {nome: 'INFORMÁTICA PARA INTERNET', turno: 'tarde'})
-CREATE (a)-[:ESTUDA]->(c);
+CREATE (pviviane)-[mn3:ministra]->(m3)
+CREATE (:Turno {sala: 'LAB 02', horarioInicial: '07:15', horarioFinal: '08:00', turma: 'A 1° ANO', diaDaSemana: 'terça'})-[:horario]->(pviviane)
+CREATE (:Turno {sala: 'LAB 02', horarioInicial: '08:00', horarioFinal: '08:45', turma: 'A 1° ANO', diaDaSemana: 'terça'})-[:horario]->(pviviane)
+CREATE (:Turno {sala: 'LAB 02', horarioInicial: '08:45', horarioFinal: '09:45', turma: 'A 1° ANO', diaDaSemana: 'terça'})-[:horario]->(pviviane)
+CREATE (:Turno {sala: 'LAB 02', horarioInicial: '10:30', horarioFinal: '11:15', turma: 'B 1° ANO', diaDaSemana: 'terça'})-[:horario]->(pviviane)
+CREATE (:Turno {sala: 'LAB 02', horarioInicial: '11:15', horarioFinal: '12:00', turma: 'B 1° ANO', diaDaSemana: 'terça'})-[:horario]->(pviviane)
+CREATE (:Turno {sala: 'LAB 02', horarioInicial: '12:00', horarioFinal: '12:45', turma: 'B 1° ANO', diaDaSemana: 'terça'})-[:horario]->(pviviane)
 
-MATCH (a:Aluno {nome: 'Otávio Vinícius Carvalho'}), (c:Curso {nome: 'INFORMÁTICA PARA INTERNET', turno: 'tarde'})
-CREATE (a)-[:ESTUDA]->(c);
 
-MATCH (a:Aluno {nome: 'Patrícia Regina Azevedo'}), (c:Curso {nome: 'TÉCNICO EM COMÉCIO', turno: 'noite'})
-CREATE (a)-[:ESTUDA]->(c);
+CREATE (al1:Aluno {nome: 'Alice Moreira da Silva', idade: 18, cidade: 'Jaboatão dos Guararapes', formacaoAnterior: 'Técnico em Administração'}),
+    (al2:Aluno {nome: 'Bruno Henrique Costa', idade: 18, cidade: 'Recife', formacaoAnterior: 'Técnico em Enfermagem'}),
+    (al3:Aluno {nome: 'Camila Fernanda Almeida', idade: 20, cidade: 'Olinda', formacaoAnterior: 'Técnico em Administração'}),
+    (al4:Aluno {nome: 'Daniel Augusto Pereira', idade: 17, cidade: 'Cabo de Santo Agostinho', formacaoAnterior: 'Técnico em Mecânica'}),
+    (al5:Aluno {nome: 'Eduardo Luiz Ribeiro', idade: 19, cidade: 'Ipojuca', formacaoAnterior: 'Técnico em Química'}),
+    (al6:Aluno {nome: 'Fernanda Cristina Oliveira', idade: 32, cidade: 'Moreno', formacaoAnterior: 'Técnico em Mecânica'}),
+    (al7:Aluno {nome: 'Gabriel Monteiro Santos', idade: 21, cidade: 'São Lourenço da Mata', formacaoAnterior: 'Técnico em Enfermagem'}),
+    (al8:Aluno {nome: 'Helena Rodrigues Lima', idade: 22, cidade: 'Abreu e Lima', formacaoAnterior: 'Técnico em Edificações'}),
+    (al9:Aluno {nome: 'Igor Matheus Andrade', idade: 20, cidade: 'Paulista', formacaoAnterior: 'Técnico em Enfermagem'}),
+    (al10:Aluno {nome: 'Juliana Maria Souza', idade: 23, cidade: 'Camaragibe', formacaoAnterior: 'Técnico em Química'}),
+    (al11:Aluno {nome: 'Karina Letícia Gonçalves', idade: 17, cidade: 'Igarassu', formacaoAnterior: 'Técnico em Informática'}),
+    (al12:Aluno {nome: 'Leonardo César Farias', idade: 35, cidade: 'Itapissuma', formacaoAnterior: 'Técnico em Enfermagem'}),
+    (al13:Aluno {nome: 'Mariana Lopes Barreto', idade: 19, cidade: 'Araçoiaba', formacaoAnterior: 'Técnico em Edificações'}),
+    (al14:Aluno {nome: 'Nathalia Duarte Freitas', idade: 26, cidade: 'Vitória de Santo Antão', formacaoAnterior: 'Técnico em Química'}),
+    (al15:Aluno {nome: 'Otávio Vinícius Carvalho', idade: 40, cidade: 'Escada', formacaoAnterior: 'Técnico em Administração'}),
+    (al16:Aluno {nome: 'Patrícia Regina Azevedo', idade: 35, cidade: 'Pombos', formacaoAnterior: 'Técnico em Informática'}),
+    (al17:Aluno {nome: 'Rafael Antunes Mendes', idade: 33, cidade: 'Chã de Alegria', formacaoAnterior: 'Técnico em Química'}),
+    (al18:Aluno {nome: 'Sofia Vitória Martins', idade: 21, cidade: 'Sirinhaém', formacaoAnterior: 'Técnico em Administração'}),
+    (al19:Aluno {nome: 'Thiago Felipe Nascimento', idade: 20, cidade: 'Glória do Goitá', formacaoAnterior: 'Técnico em Mecânica'}),
+    (al20:Aluno {nome: 'Vanessa Teixeira Ramos', idade: 19, cidade: 'Primavera', formacaoAnterior: 'Técnico em Eletrônica'}),
+    (al21:Aluno {nome: 'André Luís Peixoto', idade: 23, cidade: 'Amaraji', formacaoAnterior: 'Técnico em Informática'}),
+    (al22:Aluno {nome: 'Beatriz Almeida Torres', idade: 25, cidade: 'Cortês', formacaoAnterior: 'Técnico em Enfermagem'}),
+    (al23:Aluno {nome: 'Caio Eduardo Fernandes', idade: 21, cidade: 'Gravatá', formacaoAnterior: 'Técnico em Enfermagem'}),
+    (al24:Aluno {nome: 'Débora Aparecida Pires', idade: 23, cidade: 'Ribeirão', formacaoAnterior: 'Técnico em Edificações'}),
+    (al25:Aluno {nome: 'Felipe Henrique Sampaio', idade: 22, cidade: 'Carpina', formacaoAnterior: 'Técnico em Mecânica'}),
+    (al26:Aluno {nome: 'Giovanna Luz Santana', idade: 21, cidade: 'Lagoa do Carro', formacaoAnterior: 'Técnico em Eletrônica'}),
+    (al27:Aluno {nome: 'Henrique Guilherme Ribeiro', idade: 25, cidade: 'Lagoa de Itaenga', formacaoAnterior: 'Técnico em Mecânica'}),
+    (al28:Aluno {nome: 'Isabela Cristine Figueiredo', idade: 26, cidade: 'Nazaré da Mata', formacaoAnterior: 'Técnico em Química'}),
+    (al29:Aluno {nome: 'João Pedro Cardoso', idade: 27, cidade: 'Aliança', formacaoAnterior: 'Técnico em Administração'}),
+    (al30:Aluno {nome: 'Larissa Silva Moura', idade: 28, cidade: 'Tracunhaém', formacaoAnterior: 'Técnico em Informática'}),
+    (al31:Aluno {nome: 'Matheus Augusto Brito', idade: 15, cidade: 'Paudalho', formacaoAnterior: NULL}),
+    (al32:Aluno {nome: 'Nicole Beatriz Dias', idade: 16, cidade: 'São Vicente Férrer', formacaoAnterior: NULL}),
+    (al33:Aluno {nome: 'Pedro Henrique Amaral', idade: 18, cidade: 'Ferreiros', formacaoAnterior: NULL}),
+    (al34:Aluno {nome: 'Roberta Emília Castro', idade: 15, cidade: 'Itaquitinga', formacaoAnterior: NULL}),
+    (al35:Aluno {nome: 'Samuel Vinícius Gomes', idade: 20, cidade: 'Timbaúba', formacaoAnterior: NULL})
 
-MATCH (a:Aluno {nome: 'Rafael Antunes Mendes'}), (c:Curso {nome: 'TÉCNICO EM COMÉCIO', turno: 'noite'})
-CREATE (a)-[:ESTUDA]->(c);
-
-MATCH (a:Aluno {nome: 'Sofia Vitória Martins'}), (c:Curso {nome: 'TÉCNICO EM COMÉCIO', turno: 'noite'})
-CREATE (a)-[:ESTUDA]->(c);
-
-MATCH (a:Aluno {nome: 'Thiago Felipe Nascimento'}), (c:Curso {nome: 'TÉCNICO EM COMÉCIO', turno: 'noite'})
-CREATE (a)-[:ESTUDA]->(c);
-
-MATCH (a:Aluno {nome: 'Vanessa Teixeira Ramos'}), (c:Curso {nome: 'TÉCNICO EM COMÉCIO', turno: 'noite'})
-CREATE (a)-[:ESTUDA]->(c);
-
-MATCH (a:Aluno {nome: 'André Luís Peixoto'}), (c:Curso {nome: 'TÉCNICO EM QUALIDADE', turno: 'tarde'})
-CREATE (a)-[:ESTUDA]->(c);
-
-MATCH (a:Aluno {nome: 'Beatriz Almeida Torres'}), (c:Curso {nome: 'TÉCNICO EM QUALIDADE', turno: 'tarde'})
-CREATE (a)-[:ESTUDA]->(c);
-
-MATCH (a:Aluno {nome: 'Caio Eduardo Fernandes'}), (c:Curso {nome: 'TÉCNICO EM QUALIDADE', turno: 'tarde'})
-CREATE (a)-[:ESTUDA]->(c);
-
-MATCH (a:Aluno {nome: 'Débora Aparecida Pires'}), (c:Curso {nome: 'TÉCNICO EM QUALIDADE', turno: 'tarde'})
-CREATE (a)-[:ESTUDA]->(c);
-
-MATCH (a:Aluno {nome: 'Felipe Henrique Sampaio'}), (c:Curso {nome: 'TÉCNICO EM QUALIDADE', turno: 'tarde'})
-CREATE (a)-[:ESTUDA]->(c);
-
-MATCH (a:Aluno {nome: 'Giovanna Luz Santana'}), (c:Curso {nome: 'TÉCNICO EM ADMINISTRAÇÃO', turno: 'tarde'})
-CREATE (a)-[:ESTUDA]->(c);
-
-MATCH (a:Aluno {nome: 'Henrique Guilherme Ribeiro'}), (c:Curso {nome: 'TÉCNICO EM ADMINISTRAÇÃO', turno: 'tarde'})
-CREATE (a)-[:ESTUDA]->(c);
-
-MATCH (a:Aluno {nome: 'Isabela Cristine Figueiredo'}), (c:Curso {nome: 'TÉCNICO EM ADMINISTRAÇÃO', turno: 'tarde'})
-CREATE (a)-[:ESTUDA]->(c);
-
-MATCH (a:Aluno {nome: 'João Pedro Cardoso'}), (c:Curso {nome: 'TÉCNICO EM ADMINISTRAÇÃO', turno: 'tarde'})
-CREATE (a)-[:ESTUDA]->(c);
-
-MATCH (a:Aluno {nome: 'Larissa Silva Moura'}), (c:Curso {nome: 'TÉCNICO EM ADMINISTRAÇÃO', turno: 'tarde'})
-CREATE (a)-[:ESTUDA]->(c);
-
-MATCH (a:Aluno {nome: 'Matheus Augusto Brito'}), (c:Curso {nome: 'MIDS', turno: 'manhã'})
-CREATE (a)-[:ESTUDA]->(c);
-
-MATCH (a:Aluno {nome: 'Nicole Beatriz Dias'}), (c:Curso {nome: 'MIDS', turno: 'manhã'})
-CREATE (a)-[:ESTUDA]->(c);
-
-MATCH (a:Aluno {nome: 'Pedro Henrique Amaral'}), (c:Curso {nome: 'MIDS', turno: 'manhã'})
-CREATE (a)-[:ESTUDA]->(c);
-
-MATCH (a:Aluno {nome: 'Roberta Emília Castro'}), (c:Curso {nome: 'MIDS', turno: 'manhã'})
-CREATE (a)-[:ESTUDA]->(c);
-
-MATCH (a:Aluno {nome: 'Samuel Vinícius Gomes'}), (c:Curso {nome: 'MIDS', turno: 'manhã'})
-CREATE (a)-[:ESTUDA]->(c);
+CREATE (al1)-[:ESTUDA]->(cadsnoite)
+CREATE (al1)-[:PAGA]->(m2)
+CREATE (al2)-[:ESTUDA]->(cadsnoite)
+CREATE (al2)-[:PAGA]->(m2)
+CREATE (al3)-[:ESTUDA]->(cadsnoite)
+CREATE (al3)-[:PAGA]->(m2)
+CREATE (al4)-[:ESTUDA]->(cadsnoite)
+CREATE (al4)-[:PAGA]->(m2)
+CREATE (al5)-[:ESTUDA]->(cadsnoite)
+CREATE (al5)-[:PAGA]->(m2)
+CREATE (al6)-[:ESTUDA]->(cadstarde)
+CREATE (al6)-[:PAGA]->(m10)
+CREATE (al7)-[:ESTUDA]->(cadstarde)
+CREATE (al7)-[:PAGA]->(m10)
+CREATE (al8)-[:ESTUDA]->(cadstarde)
+CREATE (al8)-[:PAGA]->(m10)
+CREATE (al9)-[:ESTUDA]->(cadstarde)
+CREATE (al9)-[:PAGA]->(m10)
+CREATE (al10)-[:ESTUDA]->(cadstarde)
+CREATE (al10)-[:PAGA]->(m10)
+CREATE (al11)-[:ESTUDA]->(cipinoite)
+CREATE (al11)-[:PAGA]->(m1)
+CREATE (al11)-[:PAGA]->(m5)
+CREATE (al12)-[:ESTUDA]->(cipinoite)
+CREATE (al12)-[:PAGA]->(m1)
+CREATE (al12)-[:PAGA]->(m5)
+CREATE (al13)-[:ESTUDA]->(cipinoite)
+CREATE (al13)-[:PAGA]->(m1)
+CREATE (al13)-[:PAGA]->(m5)
+CREATE (al14)-[:ESTUDA]->(cipinoite)
+CREATE (al14)-[:PAGA]->(m1)
+CREATE (al14)-[:PAGA]->(m5)
+CREATE (al15)-[:ESTUDA]->(cipinoite)
+CREATE (al15)-[:PAGA]->(m1)
+CREATE (al15)-[:PAGA]->(m5)
+CREATE (al16)-[:ESTUDA]->(ccomercionoite)
+CREATE (al16)-[:PAGA]->(m6)
+CREATE (al17)-[:ESTUDA]->(ccomercionoite)
+CREATE (al17)-[:PAGA]->(m6)
+CREATE (al18)-[:ESTUDA]->(ccomercionoite)
+CREATE (al18)-[:PAGA]->(m6)
+CREATE (al19)-[:ESTUDA]->(ccomercionoite)
+CREATE (al19)-[:PAGA]->(m6)
+CREATE (al20)-[:ESTUDA]->(ccomercionoite)
+CREATE (al20)-[:PAGA]->(m6)
+CREATE (al21)-[:ESTUDA]->(cqualidade)
+CREATE (al21)-[:PAGA]->(m7)
+CREATE (al21)-[:PAGA]->(m8)
+CREATE (al21)-[:PAGA]->(m9)
+CREATE (al22)-[:ESTUDA]->(cqualidade)
+CREATE (al22)-[:PAGA]->(m7)
+CREATE (al22)-[:PAGA]->(m8)
+CREATE (al22)-[:PAGA]->(m9)
+CREATE (al23)-[:ESTUDA]->(cqualidade)
+CREATE (al23)-[:PAGA]->(m7)
+CREATE (al23)-[:PAGA]->(m8)
+CREATE (al23)-[:PAGA]->(m9)
+CREATE (al24)-[:ESTUDA]->(cqualidade)
+CREATE (al24)-[:PAGA]->(m7)
+CREATE (al24)-[:PAGA]->(m8)
+CREATE (al24)-[:PAGA]->(m9)
+CREATE (al25)-[:ESTUDA]->(cqualidade)
+CREATE (al25)-[:PAGA]->(m7)
+CREATE (al25)-[:PAGA]->(m8)
+CREATE (al25)-[:PAGA]->(m9)
+CREATE (al26)-[:ESTUDA]->(cadm)
+CREATE (al26)-[:PAGA]->(m4)
+CREATE (al26)-[:PAGA]->(m7)
+CREATE (al27)-[:ESTUDA]->(cadm)
+CREATE (al27)-[:PAGA]->(m4)
+CREATE (al27)-[:PAGA]->(m7)
+CREATE (al28)-[:ESTUDA]->(cadm)
+CREATE (al28)-[:PAGA]->(m4)
+CREATE (al28)-[:PAGA]->(m7)
+CREATE (al29)-[:ESTUDA]->(cadm)
+CREATE (al29)-[:PAGA]->(m4)
+CREATE (al29)-[:PAGA]->(m7)
+CREATE (al30)-[:ESTUDA]->(cadm)
+CREATE (al30)-[:PAGA]->(m4)
+CREATE (al30)-[:PAGA]->(m7)
+CREATE (al31)-[:ESTUDA]->(cmids)
+CREATE (al31)-[:PAGA]->(m1)
+CREATE (al31)-[:PAGA]->(m3)
+CREATE (al32)-[:ESTUDA]->(cmids)
+CREATE (al32)-[:PAGA]->(m1)
+CREATE (al32)-[:PAGA]->(m3)
+CREATE (al33)-[:ESTUDA]->(cmids)
+CREATE (al33)-[:PAGA]->(m1)
+CREATE (al33)-[:PAGA]->(m3)
+CREATE (al34)-[:ESTUDA]->(cmids)
+CREATE (al34)-[:PAGA]->(m1)
+CREATE (al34)-[:PAGA]->(m3)
+CREATE (al35)-[:ESTUDA]->(cmids)
