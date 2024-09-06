@@ -2,12 +2,6 @@
 // MongoDB Playground
 // Use Ctrl+Space inside a snippet or a string literal to trigger completions.
 
-const database = 'admin';
-
-
-// database para usar
-use(database);
-
 db.createCollection('faculdades')
 
 // MongoDB Playground
@@ -330,19 +324,20 @@ db.faculdades.insertMany([
 
 /* Realizar um CRUD geral no banco de dados, com as seguintes operações: */
 //Cadastre algumas faculdades entradas com insertOne e insertMany()
-db.faculdades.insertOne({
-    nome: 'Fatec',
+db.faculdades.insert({
+    _id: ObjectId(),
+    nome: 'NAP',
     cidade: 'Bahia',
-    cursos: ['Análise e Desenvolvimento de Sistemas', 'Gestão Empresarial', 'Logística', 'Redes de Computadores'],
+    cursos: ['Análise de sono pesado', 'Gestão de Sono', 'Logística da soneca', 'Redes de dormir'],
     biblioteca: {
         _id: ObjectId(),
-        nome: 'Fatec',
+        nome: 'Bibliotéca NAP',
         livros: [
             {
                 _id: ObjectId(),
-                nome: 'Java',
-                autor: 'Deitel',
-                isbn: '978-77-352-2707-6',
+                nome: 'Como dormir como um bebê',
+                autor: 'Davi Belos Sonhos',
+                isbn: '777-77-777-7777-7',
                 tombos: [
                     {
                         _id: ObjectId(),
@@ -363,60 +358,13 @@ db.faculdades.insertOne({
                     {
                         _id: ObjectId(),
                         disponivel:true
-                    }
-                ]
-            },
-            {
-                _id: ObjectId(),
-                nome: 'Python',
-                autor: 'Deitel',
-                isbn: '948-85-352-2707-6',
-                tombos: [
-                    {
-                        _id: ObjectId(),
-                        disponivel: true
-                    },
-                    {
-                        _id: ObjectId(),
-                        disponivel: false,
-                        aluno: {
-                            _id: ObjectId(),
-                            nome: 'josé do caixão',
-                            email: 'jose.do.caixao@fatec.edu.br',
-                            curso: 'Gestão Empresarial',
-                            dataIngresso: new Date('2021-01-01')
-                        },
-                        dataEmprestimo: new Date('2021-10-05')
-                    }
-                ]
-            },
-            {
-                _id: ObjectId(),
-                nome: 'JavaScript',
-                autor: 'Deitel',
-                isbn: '978-85-352-2707-6',
-                tombos: [
-                    {
-                        _id: ObjectId(),
-                        disponivel: true
-                    },
-                    {
-                        _id: ObjectId(),
-                        disponivel: false,
-                        aluno: {
-                            _id: ObjectId(),
-                            nome: 'José felipe andrade',
-                            email: 'josefelipeandrade@fatec.edu.br',
-                            curso: 'Logística',
-                            dataIngresso: new Date('2021-01-01')
-                        },
-                        dataEmprestimo: new Date('2021-10-05')
                     }
                 ]
             }
         ]
     }
 });
+db.faculdades.find({nome: 'NAP'});
 // insert many
 db.faculdades.insertMany([
     {
@@ -432,7 +380,7 @@ db.faculdades.insertMany([
 ]);
 
 //Atualizando alguns valores no documento com updateOne,updateMany e replaceOne
-
+db.faculdades.find({nome: 'Fatec'});
 db.faculdades.updateOne(
     { nome: 'Fatec' },
     {
@@ -442,6 +390,7 @@ db.faculdades.updateOne(
     }
 );
 // update many
+db.faculdades.find({cidade: 'Recife'});
 db.faculdades.updateMany(
     { cidade: 'Recife' },
     {
@@ -459,6 +408,8 @@ db.faculdades.replaceOne(
         cursos: ['Medicina', 'Engenharia de civil', 'Administração', 'Engenharia de produção'],
     }
 );
+db.faculdades.find({nome: 'UVA'});
+db.faculdades.find({nome: 'UNINASSAU'});
 
 //Deletando algo baseado em alguma condição(deleteOne( ) e deleteMany( ))
 db.faculdades.deleteOne({ nome: 'UNINASSAU' });
@@ -468,11 +419,18 @@ db.faculdades.deleteMany({ cidade: 'Olinda' });
 db.faculdades.find();
 
 //Manipulando dados no array de tombos fazendo::atualização, inclusão e deleção
-db.faculdades.updateOne({nome: 'Fatec',cidade: 'São Paulo'},{$set:{'biblioteca.livros.0.tombos.0.disponivel': false, }});
-// inclusão de um novo tombo para a mesma Fatec
-db.faculdades.updateOne({nome: 'Fatec',cidade: 'São Paulo'},{$push:{'biblioteca.livros.0.tombos': { _id: ObjectId(), disponivel: true }}});
+db.faculdades.find({nome: 'NAP',cidade: 'Bahia'},{'biblioteca.livros.nome':1,'biblioteca.livros.tombos': 1});
+
+
+
+db.faculdades.updateOne({nome: 'NAP',cidade: 'Bahia'},{$set:{'biblioteca.livros.0.tombos.0.disponivel': false, }});
+// inclusão de um novo tombo para a mesma NAP
+db.faculdades.updateOne({nome: 'NAP',cidade: 'Bahia'},{$push:{'biblioteca.livros.0.tombos': { _id: ObjectId(), disponivel: true }}});
+
+//encontrando a quantidade de tombos do primeiro livro da Fatec
+db.faculdades.aggregate([{$unwind: "$biblioteca.livros"},{$match: { "biblioteca.livros.nome": "Como dormir como um bebê" }},{$project: {quantidadeTombos: { $size: "$biblioteca.livros.tombos" }}}]);
 // deleção de um tombo
-db.faculdades.updateOne({nome: 'Fatec',cidade: 'São Paulo'},{$pull:{'biblioteca.livros.0.tombos.0': 1}});
+db.faculdades.updateOne({nome: 'Fatec',cidade: 'Jaboatão'},{$pull:{'biblioteca.livros.0.tombos': 1}});
 //fazendo seleções de dados usando projeções simples, de array e subobjetos.
 db.faculdades.find({ nome: 'Fatec' }, { alunos: 1, _id: 0 });
 //fazendo filtros em dados de diferentes tipos
