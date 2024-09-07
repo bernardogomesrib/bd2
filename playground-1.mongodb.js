@@ -1,6 +1,4 @@
-/* global use, db */
-// MongoDB Playground
-// Use Ctrl+Space inside a snippet or a string literal to trigger completions.
+// Bernardo José Gomes Ribeiro e Ian Lucas Almeida
 
 db.createCollection('faculdades')
 
@@ -37,7 +35,7 @@ db.faculdades.insertMany([
     {
         nome: 'Fatec',
         cidade: 'São Paulo',
-        cursos: ['Análise e Desenvolvimento de Sistemas', 'Gestão Empresarial', 'Logística', 'Redes de Computadores'],
+        cursos: ['Análise e Desenvolvimento de Sistemas', 'Gestão Empresarial', 'Logística', 'Redes de Computadores','Engenharia de alimentos'],
         biblioteca: {
             _id: ObjectId(),
             nome: 'Fatec',
@@ -323,7 +321,7 @@ db.faculdades.insertMany([
 
 
 /* Realizar um CRUD geral no banco de dados, com as seguintes operações: */
-//Cadastre algumas faculdades entradas com insertOne e insertMany()
+//Cadastro de faculdades entradas com insertOne e insertMany()
 db.faculdades.insert({
     _id: ObjectId(),
     nome: 'NAP',
@@ -364,6 +362,7 @@ db.faculdades.insert({
         ]
     }
 });
+//checando a faculdade
 db.faculdades.find({nome: 'NAP'});
 // insert many
 db.faculdades.insertMany([
@@ -376,11 +375,18 @@ db.faculdades.insertMany([
         nome: 'UFPE',
         cidade: 'Recife',
         cursos: ['Análise e desenvolvimento de Sistemas', 'Biologia', 'Quimica'],
+    },
+    {
+        nome:"FAFREEFIRE",
+        cidade:"Olinda",
+        cursos:["Jogos","Desenvolvimento de jogos","Jogos online"]
     }
 ]);
 
 //Atualizando alguns valores no documento com updateOne,updateMany e replaceOne
+
 db.faculdades.find({nome: 'Fatec'});
+
 db.faculdades.updateOne(
     { nome: 'Fatec' },
     {
@@ -404,7 +410,7 @@ db.faculdades.replaceOne(
     { nome: 'UVA' },
     {
         nome: 'UNINASSAU',
-        cidade: 'Cabo de Santo Agostinho',
+        cidade: 'Olinda',
         cursos: ['Medicina', 'Engenharia de civil', 'Administração', 'Engenharia de produção'],
     }
 );
@@ -419,52 +425,42 @@ db.faculdades.deleteMany({ cidade: 'Olinda' });
 db.faculdades.find();
 
 //Manipulando dados no array de tombos fazendo::atualização, inclusão e deleção
+//selecionando os tombos do livro "Como dormir como um bebê" da NAP
 db.faculdades.find({nome: 'NAP',cidade: 'Bahia'},{'biblioteca.livros.nome':1,'biblioteca.livros.tombos': 1});
-
-
-
+//atualizando o campo disponível do primeiro tombo do livro "Como dormir como um bebê" da NAP
 db.faculdades.updateOne({nome: 'NAP',cidade: 'Bahia'},{$set:{'biblioteca.livros.0.tombos.0.disponivel': false, }});
 // inclusão de um novo tombo para a mesma NAP
+//antes quero contar a quantidade de tombos do livro "Como dormir como um bebê" da NAP
+db.faculdades.aggregate([{$unwind: "$biblioteca.livros"},{$match: { "biblioteca.livros.nome": "Como dormir como um bebê" }},{$match:{"nome":"NAP"}},{$project: {quantidadeTombos: { $size: "$biblioteca.livros.tombos" }}}]);
+//ADICIONANDO UM NOVO TOMBO
 db.faculdades.updateOne({nome: 'NAP',cidade: 'Bahia'},{$push:{'biblioteca.livros.0.tombos': { _id: ObjectId(), disponivel: true }}});
-
-//encontrando a quantidade de tombos do primeiro livro da Fatec
-db.faculdades.aggregate([{$unwind: "$biblioteca.livros"},{$match: { "biblioteca.livros.nome": "Como dormir como um bebê" }},{$project: {quantidadeTombos: { $size: "$biblioteca.livros.tombos" }}}]);
 // deleção de um tombo
-db.faculdades.updateOne({nome: 'Fatec',cidade: 'Jaboatão'},{$pull:{'biblioteca.livros.0.tombos': 1}});
+db.faculdades.updateOne({ "nome": "NAP", "biblioteca.livros.nome": "Como dormir como um bebê" }, { $unset: { "biblioteca.livros.$.tombos.0": 1 }});
 //fazendo seleções de dados usando projeções simples, de array e subobjetos.
-db.faculdades.find({ nome: 'Fatec' }, { alunos: 1, _id: 0 });
+//selecionando apenas os nomes dos alunos de faculdades com nome "Fatec"
+db.faculdades.find({ "nome": "Fatec" },{ "alunos.nome": 1,_id: 0 });
 //fazendo filtros em dados de diferentes tipos
 //comparando tipos simples em uma seleção (números, textos, datas...),
 //selecionando o aluno que entrou em uma data que seja posterior a 2021-01-01
-db.faculdades.find({ 'alunos.dataIngresso': { $gt: new Date('2021-01-01') } });
-
+db.faculdades.find({ 'alunos.dataIngresso': { $gt: new Date('2020-12-31T23:59:59Z') } },{"alunos.nome":1,"alunos.dataIngresso":1,_id:0});
 //Pesquisando em sub-objetos e também em arrays
 //selecionando os alunos que estão com livros emprestados
-db.faculdades.find({ 'alunos.historicoNaBiblioteca.devolvido': false });
-//fazendo uma busca de um aluno com uma data de i ngresso que seja maior que 2021-01-01, que tenha entrado antes de 2021-10-01 e que tenha mais de um livro no histórico
-db.faculdades.find({ 'alunos.dataIngresso': { $gt: new Date('2021-01-01'), $lt: new Date('2021-10-01') }, 'alunos.historicoNaBiblioteca': { $size:{$gt:1} } });
+db.faculdades.find({ 'alunos.historicoNaBiblioteca.devolvido': false },{"alunos.nome":1,"alunos.historicoNaBiblioteca":1,_id:0});
+//fazendo uma busca de um aluno com uma data de ingresso que seja maior que 2021-01-01, que tenha entrado antes de 2021-10-01 e que tenha mais de um livro no histórico
+db.faculdades.find({"alunos.dataIngresso": { $gte: new Date("2021-01-01T00:00:00Z"), $lte: new Date("2021-10-01T00:00:00Z") },$expr: { $gt: [ { $size: "$alunos.historicoNaBiblioteca" }, 1 ] }},{"alunos.nome": 1,"alunos.historicoNaBiblioteca": 1,"_id": 0});
 
 //fazendo uma busca Equivalente ao LIKE de SQL
 
 /* Ao resultado, aplicar: ordenação, LIMIT e SKIP, operadores de agregação, DISTINCT */
-db.faculdades.find(
-    { 'alunos.email': { $regex: /fatec/i } }
-  ).skip(2).limit(1);
-
-  
+//selecionando as faculdades que tem cursos de engenharia mas pulando as duas primeiras
+db.faculdades.find({ cursos:/Engenharia/ },{nome:1,cidade:1,_id:0}).skip(2)
+//selecionando os cursos de todas as faculdades
 db.faculdades.distinct('cursos');
 
+//aluno com maior quantidade de livros emprestados
 db.faculdades.aggregate([
-    { $match: { nome: 'Fatec' } },
-    { $unwind: '$biblioteca.livros' },
-    { $unwind: '$biblioteca.livros.tombos' },
-    { $match: { 'biblioteca.livros.tombos.disponivel': true } },
-    { $count: 'livrosDisponiveis' }
-  ]);
-
-  db.faculdades.aggregate([
-    { $unwind: '$alunos' },
-    { $project: { nome: '$alunos.nome', quantidadeLivros: { $size: '$alunos.historicoNaBiblioteca' } } },
-    { $sort: { quantidadeLivros: -1 } },
-    { $limit: 1 }
-  ]);
+{ $unwind: '$alunos' },
+{ $project: { nome: '$alunos.nome', quantidadeLivros: { $size: '$alunos.historicoNaBiblioteca' } } },
+{ $sort: { quantidadeLivros: -1 } },
+{ $limit: 1 }
+]);

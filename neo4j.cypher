@@ -1,3 +1,6 @@
+//trabalho de grafo Bernardo José Gomes Ribeiro e Ian Lucas Almeida
+
+
 CREATE (peric:Professor {Nome: 'Eric', Sobrenome: 'Sales', Idade: 33, Formação: 'Sistemas da Informação', Titulo: 'Mestre', isCoordenador: FALSE}),
        (pviviane:Professor {Nome: 'Viviane', Sobrenome: 'Aureliano', Idade: 44, Formação: 'Ciênica da Computação', Titulo: 'Doutora', isCoordenador: FALSE}),
        (pjacinta:Professor {Nome: 'Jacinta', Sobrenome: 'Raposo', Idade: 40, Formação: 'Administração', Titulo: 'Mestre', isCoordenador: TRUE}),
@@ -247,3 +250,155 @@ CREATE (al34)-[:ESTUDA]->(cmids)
 CREATE (al34)-[:PAGA]->(m1)
 CREATE (al34)-[:PAGA]->(m3)
 CREATE (al35)-[:ESTUDA]->(cmids)
+
+
+
+
+
+//inserts e deletes
+
+//apagando o aluno igor e as suas relações
+
+MATCH (a:Aluno {nome: 'Igor Matheus Andrade'})
+DETACH DELETE a;
+
+
+
+//fazendo um insert de um aluno que estuda ADS no turno da tarde
+CREATE (aluana:Aluno {nome: 'Luana Gomes', idade: 22, cidade: 'Recife', formacaoAnterior: 'Técnico em Informática'})
+WITH aluana
+MATCH (cadstarde:Curso {nome: 'ADS', turno: 'tarde'})
+CREATE (aluana)-[:ESTUDA]->(cadstarde);
+
+//alterando a formação de um professor para Engenharia de Software
+
+MATCH (p:Professor {Nome: 'Carlos', Sobrenome: 'Brasil'})
+SET p.Formação = 'Engenharia de Software';
+
+//alterando a carga horária de uma disciplina
+MATCH (d:Disciplina {nome: 'ENGENHARIA DE SOFTWARE'})
+SET d.ch = 80;
+
+//selects e filtros
+
+//1. Select com Projeção de Dados Simples, de Array e Subobjetos
+//consulta simples Nome e Sobrenome de Professores
+
+MATCH (p:Professor)
+RETURN p.Nome, p.Sobrenome;
+
+//Mostrando os nomes das disciplinas de um curso
+MATCH(D:Disciplina)-[:faz_parte]->(C:Curso) where C.nome = "ADS" RETURN C.nome as Curso,Collect(D.nome) AS Disciplinas
+MATCH(D:Disciplina)-[:faz_parte]->(C:Curso) where C.nome = "MIDS" RETURN C.nome as Curso,Collect(D.nome) AS Disciplinas
+
+
+//Mostrando as disciplinas com seus eixos
+
+MATCH (d:Disciplina)
+RETURN d.nome, d.eixo;
+
+
+//Select com Filtros em Dados de Diferentes Tipos
+//Filtro por Texto Professores com Título "Mestre"
+
+MATCH (p:Professor)
+WHERE p.Titulo = 'Mestre'
+RETURN p.Nome, p.Titulo;
+
+//Filtro por Número Professores com idade maior que 40
+
+MATCH (p:Professor)
+WHERE p.Idade > 40
+RETURN p.Nome, p.Idade;
+
+//Filtro por Boolean Professores que são Coordenadores
+
+MATCH (p:Professor)
+WHERE p.isCoordenador = TRUE
+RETURN p.Nome, p.isCoordenador;
+
+
+// Select Comparando Tipos Simples Números, Textos, Datas
+// Comparando Números Disciplinas com carga horária maior que 40 horas
+
+MATCH (d:Disciplina)
+WHERE d.ch > 40
+RETURN d.nome, d.ch;
+
+//Comparando Textos mostrando apenas os cursos de nível técnico":
+
+MATCH (c:Curso)
+WHERE c.nivel = 'técnico'
+RETURN c.nome, c.nivel;
+
+
+// Select Pesquisando em Sub-objetos e Arrays
+// Pesquisar em Sub-objetos (Mostrando todas as disciplinas de um professor
+
+
+MATCH (p:Professor)-[:ministra]->(d:Disciplina)
+WHERE p.Nome = 'Eric'
+RETURN p.Nome, collect(d.nome) AS Disciplinas;
+
+//Pesquisar em Arrays Mostrando os cursos com disciplinas da área de "Gestão e Negócios":
+
+MATCH (c:Curso)-[:faz_parte]->(d:Disciplina)
+WHERE d.eixo = 'Gestão e Negócios'
+RETURN c.nome, collect(d.nome) AS Disciplinas;
+
+// Select com Condições com Comparadores (> , < , >= , <= , <>)
+// Condições com Comparadores (Professores entre 30 e 40 anos
+
+MATCH (p:Professor)
+WHERE p.Idade >= 30 AND p.Idade <= 40
+RETURN p.Nome, p.Idade;
+
+//Condições com <> (Professores que não são coordenadores
+
+MATCH (p:Professor)
+WHERE p.isCoordenador <> TRUE
+RETURN p.Nome, p.isCoordenador;
+
+// Select com Algo Equivalente ao LIKE de SQL
+// Uso de CONTAINS para buscar alunos cujo nome contenha "Maria":
+
+MATCH (a:Aluno)
+WHERE a.nome CONTAINS 'Maria'
+RETURN a.nome;
+
+//Uso de STARTS WITH para buscar professores cujo nome comece com "Ca":
+
+MATCH (p:Professor)
+WHERE p.Nome STARTS WITH 'Ca'
+RETURN p.Nome;
+
+//Uso de ENDS WITH para buscar cursos cujo nome termine com "te":
+
+MATCH (c:Curso)
+WHERE c.turno ENDS WITH 'te'
+RETURN c.nome;
+
+// Select com Aplicação de Ordenação, LIMIT, SKIP, Operadores de Agregação, DISTINCT
+// Ordenar e Limitar Ordenar professores por idade e Mostrando os 3 MAIS velhos:
+
+MATCH (p:Professor)
+RETURN p.Nome, p.Idade
+ORDER BY p.Idade DESC
+LIMIT 3;
+
+//Usar SKIP para pular os primeiros 2 cursos:
+
+MATCH (c:Curso)
+RETURN c.nome
+ORDER BY c.nome
+SKIP 2;
+
+//Operadores de Agregação Contar o número de professores
+
+MATCH (p:Professor)
+RETURN COUNT(p) AS TotalProfessores;
+
+//Usar DISTINCT para Mostrando as diferentes formações dos professores:
+
+MATCH (p:Professor)
+RETURN DISTINCT p.Formação;

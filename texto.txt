@@ -1,16 +1,56 @@
 
-lpush frutas maçã banana abacaxi goiaba
-lrange frutas 0 1000
-llen frutas
+//grupo: Bernardo José Gomes Ribeiro e Ian Lucas Almeida
+//o contexto que pensei foi por causa de programação web3 estou fazendo um image board e não tenho
+//categorização para o board, pensei em por isso no banco de dados, porém não quero, o notebook que estou usando para hostear
+//está lento do geito que tá e o certo seria separar se eu tivesse condições em 2 "servidores" diferentes ou em um notebook que preste
+//(tecnicamente o notebook presta, mas não consegue usar a capacidade toda por não poder usar mais que 12w)
+//(dell não gosta que você use carregadores paralelos)
+//dai por eu estar com imageboards na minha cabeça resolvi fazer com isso 👍
 
 
-HMSET link:tv link /tv descricao "board de assuntos relacionados a televisão"
-HMSET link:anime link /anime descricao "board de assuntos relacionados a animes"
-HMSET link:eletronica link /eletronica descricao "board de assuntos relacionados a eletrônica em geral"
-HMSET link:machining link /machining descricao "o assunto aqui é só máquinas e peças feitas com CNC e tornos"
-HMSET link:fight link /fight descricao "só lutas!"
+//adicionando boards com as categorias
+HMSET board:artes:tv link /tv descricao "board de assuntos relacionados a televisão"
+HMSET board:artes:anime link /anime descricao "board de assuntos relacionados a animes"
+HMSET board:eletronica:eletronica link /eletronica descricao "board de assuntos relacionados a eletrônica em geral"
+HMSET board:eletronica:machining link /machining descricao "o assunto aqui é só máquinas e peças feitas com CNC e tornos e projetos eletrônicos de tornos automaticos 5d"
+HMSET board:luta:fight link /fight descricao "só lutas profissionais"
+HMSET board:lutas:stfi link /strtf descricao "luta de rua, pancadaria que aconteceu no seu bairro"
 
-KEYS link:*
 
-HGETALL link:tv
+listando todas as chaves de boards
+KEYS board:*
+saida:
+
+[
+    "board:eletronica:eletronica",
+    "board:lutas:stfi",
+    "board:artes:anime",
+    "board:artes:tv",
+    "board:eletronica:machining",
+    "board:luta:fight"
+]
+
+// pegando apenas a descrição de um board
+HGET board:eletronica:eletronica descricao
+saida:
+board de assuntos relacionados a eletrônica em geral
+
+//definindo uma descricao diferente para um board
+HSET board:luta:fight descricao "lutas profissionais porém se a luta não profissional for em um octógono ou na academia ta valendo"
+saida:
+(integer) 0
+// redis é muito confuso, não entendo porquê uma edição é 0 de retorno
+{
+127.0.0.1:6379> HSET board:luta:fight descricao "lutas profissionais porém se a luta não profissional for em um octógono ou na academia ta valendo"
+(integer) 0
+127.0.0.1:6379> hget board:luta:fight descricao
+lutas profissionais porém se a luta não profissional for em um octógono ou na academia ta valendo
+}// eu testando isso funcionou
+
+//deletar um board
+DEL board:eltetronica:machining
+saida:
+(integer) 1
+
+
 
